@@ -26,4 +26,7 @@
 	<entry key="sql2">select address,city,state from customer where name = 'Bob Smith'</entry>
 	<entry key="sql3">select name, city, zip from customer where name like '%Bill%'</entry>
 	<entry key="sql4">select item_id from sale where price&lt;20</entry>
+	<entry key="sql5">select item_id, quantity, price from sale where price&gt;20 and quantity&gt;11</entry>
+	<entry key="sql6">select item_id, quantity, price from sale where price in (29.95, 19,95, 9.99)</entry>
+
 </properties>

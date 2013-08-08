@@ -12,6 +12,8 @@ import org.junit.Test;
 
 public class Tests {
 	public boolean testSQL(int sqlFileNumber) {
+		Msg.debugSep();
+		Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
 		// get the file name of both user file and sql practice number
 		String userFileName = sqlFileNumber + ".sql";
 		String userFilePath = Tests.class.getResource(userFileName).getFile();
@@ -25,7 +27,7 @@ public class Tests {
 		String fullSQL = userSQL.full.toString();
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
 		DB.resultContent(compactSQL);
-		
+
 		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL(answerSQL));
 		Msg.debugMsg(Tests.class, "Your SQL is: \n" + userSQL);
 		Msg.debugMsg(Tests.class, "The new SQL is: \n" + newSQL);
@@ -35,30 +37,32 @@ public class Tests {
 
 	@Test
 	public void testSQL1() {
-		Msg.debugSep();
-		Msg.userMsgLn("***************SQL 1  测试***************");
 		assertTrue(testSQL(1));
 	}
 
 	@Test
 	public void testSQL2() {
-		Msg.debugSep();
-		Msg.userMsgLn("\n***************SQL 2  测试***************");
 		assertTrue(testSQL(2));
 	}
-	
+
 	@Test
 	public void testSQL3() {
-		Msg.debugSep();
-		Msg.userMsgLn("\n***************SQL 3  测试***************");
 		assertTrue(testSQL(3));
 	}
-	
+
 	@Test
 	public void testSQL4() {
-		Msg.debugSep();
-		Msg.userMsgLn("\n***************SQL 4  测试***************");
 		assertTrue(testSQL(4));
+	}
+
+	@Test
+	public void testSQL5() {
+		assertTrue(testSQL(5));
+	}
+
+	@Test
+	public void testSQL6() {
+		assertTrue(testSQL(6));
 	}
 
 }
