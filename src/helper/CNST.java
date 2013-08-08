@@ -27,8 +27,6 @@ public class CNST {
 			try {
 				File ppxml=FileIO.findSiblingResource(CNST.class, "properties.xml");
 				fis = new FileInputStream(ppxml);
-				System.out.println("property.xml loaded");
-				//Msg.debugMsg(CNST.class, "property.xml loaded");
 				prop.loadFromXML(fis);
 			} catch (Exception e) {
 				e.printStackTrace();
