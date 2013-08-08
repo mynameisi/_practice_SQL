@@ -33,6 +33,11 @@ public class Tests {
 
 		return !DB.hasResult(newSQL);
 	}
+	
+	@Test
+	public void testSQL0() {
+		assertTrue(testSQL(0));
+	}
 
 	@Test
 	public void testSQL1() {

@@ -10,16 +10,24 @@ public class SQL {
 		String selectList = SQL.getSelectList(answer);
 		Msg.debugMsg(SQL.class, "User Input sql is: " + userInput);
 		Msg.debugMsg(SQL.class, "select list is: " + selectList);
-		String newSQL = answer + " and " + selectList + " not in (" + userInput
-				+ ");";
+		String newSQL = null;
+		if (userInput.toLowerCase().contains("where")) {
+			// this is when user input is "select * from * where *"
+			newSQL = answer + " and " + selectList + " not in (" + userInput + ");";
+
+		} else {
+			// this is when user input is "select * from *"
+			newSQL = answer + " where " + selectList + " not in (" + userInput + ");";
+		}
+
 		Msg.debugMsg(SQL.class, "Set Minus sql is: " + newSQL);
 		return newSQL;
 	}
 
 	public static String getSelectList(String SQL) {
-		//这个变量如果是全局变量，就会影响到第一个JUnit测试后面的测试
-		//这就是为什么JUnit测试单独测试都可以
-		//但是一放到一起就不行了
+		// 这个变量如果是全局变量，就会影响到第一个JUnit测试后面的测试
+		// 这就是为什么JUnit测试单独测试都可以
+		// 但是一放到一起就不行了
 		boolean start = false;
 		Scanner sc = new Scanner(SQL);
 		ArrayList<String> selectList = new ArrayList<String>();
@@ -41,8 +49,7 @@ public class SQL {
 
 		}
 		sc.close();
-		String result = selectList.toString().replace('[', '(')
-				.replace(']', ')');
+		String result = selectList.toString().replace('[', '(').replace(']', ')');
 		return result;
 	}
 }
