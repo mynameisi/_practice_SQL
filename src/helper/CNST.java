@@ -13,7 +13,10 @@ public class CNST {
 	public static String DB_URL = null;
 	public static String USER = null;
 	public static String PASS = null;
-	public static Boolean OK_MSG = null;
+	
+	public static Boolean DEBUG_MSG = null;
+	public static Boolean USER_MSG = null;
+	
 	public static Charset CHAR_ENCODING = null;
 
 	static {
@@ -27,7 +30,8 @@ public class CNST {
 				e.printStackTrace();
 			}
 		}
-		OK_MSG = OK_MSG != null ? OK_MSG : Boolean.parseBoolean(prop.getProperty("OK_MSG"));
+		DEBUG_MSG = DEBUG_MSG != null ? DEBUG_MSG : Boolean.parseBoolean(prop.getProperty("DEBUG_MSG"));
+		USER_MSG = USER_MSG != null ? USER_MSG : Boolean.parseBoolean(prop.getProperty("USER_MSG"));
 		switch (prop.getProperty("CHAR_ENCODING")) {
 		case "UTF-8":
 			CHAR_ENCODING = StandardCharsets.UTF_8;

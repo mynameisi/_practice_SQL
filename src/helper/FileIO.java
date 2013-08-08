@@ -19,7 +19,7 @@ public class FileIO {
 			e.printStackTrace();
 		}
 		String content = encoding.decode(ByteBuffer.wrap(encoded)).toString();
-		Msg.mmsg("你的SQL是: \n" + content);
+		Msg.userMsgLn("你的SQL是: \n" + content);
 		return content;
 	}
 

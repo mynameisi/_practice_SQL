@@ -23,26 +23,42 @@ public class Tests {
 		SqlResults userSQL = FileIO.compactSQLFromFile(userFile);
 		String compactSQL = userSQL.compat.toString();
 		String fullSQL = userSQL.full.toString();
-		Msg.mmsg("你输入的SQL是:\n" + fullSQL);
+		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
 		DB.resultContent(compactSQL);
 		
 		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL(answerSQL));
-		Msg.msg(Tests.class, "Your SQL is: \n" + userSQL);
-		Msg.msg(Tests.class, "The new SQL is: \n" + newSQL);
+		Msg.debugMsg(Tests.class, "Your SQL is: \n" + userSQL);
+		Msg.debugMsg(Tests.class, "The new SQL is: \n" + newSQL);
 
 		return !DB.hasResult(newSQL);
 	}
 
 	@Test
 	public void testSQL1() {
-		Msg.sep();
+		Msg.debugSep();
+		Msg.userMsgLn("***************SQL 1  测试***************");
 		assertTrue(testSQL(1));
 	}
 
 	@Test
 	public void testSQL2() {
-		Msg.sep();
+		Msg.debugSep();
+		Msg.userMsgLn("\n***************SQL 2  测试***************");
 		assertTrue(testSQL(2));
+	}
+	
+	@Test
+	public void testSQL3() {
+		Msg.debugSep();
+		Msg.userMsgLn("\n***************SQL 3  测试***************");
+		assertTrue(testSQL(3));
+	}
+	
+	@Test
+	public void testSQL4() {
+		Msg.debugSep();
+		Msg.userMsgLn("\n***************SQL 4  测试***************");
+		assertTrue(testSQL(4));
 	}
 
 }

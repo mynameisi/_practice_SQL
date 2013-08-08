@@ -19,31 +19,31 @@ public class DB {
 			rs = stmt.executeQuery(SQL);
 			ResultSetMetaData rsMetaData = rs.getMetaData();
 			int numberOfColumns = rsMetaData.getColumnCount();
-			Msg.mmsg("你的SQL的结果是:");
+			Msg.userMsgLn("你的SQL的结果是:");
 			// 注意：i的起始值和以什么方式确定上限
 
-			Msg.msep(numberOfColumns, '-');
+			Msg.userSep(numberOfColumns, '-');
 			for (int i = 1; i <= numberOfColumns; i++) {
 				String name = rsMetaData.getColumnName(i);
-				System.out.printf("%-20s|", name);
+				Msg.userMsgF("%-20s|", name);
 
 			}
-			Msg.mmsg("");
-			Msg.msep(numberOfColumns, '-');
+			Msg.userMsgLn("");
+			Msg.userSep(numberOfColumns, '-');
 			while (rs.next()) {
 				for (int i = 0; i < numberOfColumns; i++) {
-					System.out.printf("%-20s|", rs.getObject(i + 1));
+					Msg.userMsgF("%-20s|", rs.getObject(i + 1));
 				}
-				System.out.println();
+				Msg.userMsgLn("");
 			}
-			Msg.msep(numberOfColumns, '-');
+			Msg.userSep(numberOfColumns, '-');
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
-					Msg.msg(DB.class, "ResultSet closed");
+					Msg.debugMsg(DB.class, "ResultSet closed");
 				}
 				if (stmt != null) {
 					stmt.close();
@@ -51,7 +51,7 @@ public class DB {
 				}
 				if (conn != null) {
 					conn.close();
-					Msg.msg(DB.class, "Connection closed");
+					Msg.debugMsg(DB.class, "Connection closed");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -76,7 +76,7 @@ public class DB {
 			try {
 				if (rs != null) {
 					rs.close();
-					Msg.msg(DB.class, "ResultSet closed");
+					Msg.debugMsg(DB.class, "ResultSet closed");
 				}
 				if (stmt != null) {
 					stmt.close();
@@ -84,7 +84,7 @@ public class DB {
 				}
 				if (conn != null) {
 					conn.close();
-					Msg.msg(DB.class, "Connection closed");
+					Msg.debugMsg(DB.class, "Connection closed");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

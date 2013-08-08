@@ -5,13 +5,14 @@ import java.util.Scanner;
 
 public class SQL {
 
-	public static String produceMius(String yourAnswer, String answer) {
-		yourAnswer = yourAnswer.replaceAll(";", "");
+	public static String produceMius(String userInput, String answer) {
+		userInput = userInput.replaceAll(";", "");
 		String selectList = SQL.getSelectList(answer);
-		Msg.msg(SQL.class, "Your sql is: " + yourAnswer);
-		Msg.msg(SQL.class, "select list is: " + selectList);
-		String newSQL = answer + "and " + selectList + " not in (" + yourAnswer
+		Msg.debugMsg(SQL.class, "User Input sql is: " + userInput);
+		Msg.debugMsg(SQL.class, "select list is: " + selectList);
+		String newSQL = answer + " and " + selectList + " not in (" + userInput
 				+ ");";
+		Msg.debugMsg(SQL.class, "Set Minus sql is: " + newSQL);
 		return newSQL;
 	}
 
@@ -25,7 +26,7 @@ public class SQL {
 		String str = null;
 		while (sc.hasNext()) {
 			str = sc.next().replaceAll(",$", "").trim();
-			Msg.msg(SQL.class, "str=" + str + "]");
+			Msg.debugMsg(SQL.class, "str=" + str + "]");
 			if (!start) {
 				if (str.equals("select")) {
 					start = true;
@@ -35,7 +36,7 @@ public class SQL {
 			if (str.equals("from")) {
 				break;
 			}
-			Msg.msg(SQL.class, "add[" + str + "]");
+			Msg.debugMsg(SQL.class, "add[" + str + "]");
 			selectList.add(str);
 
 		}
