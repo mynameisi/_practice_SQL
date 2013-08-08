@@ -1,5 +1,6 @@
 package helper;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,10 @@ public class CNST {
 			prop = new Properties();
 			FileInputStream fis;
 			try {
-				fis = new FileInputStream(CNST.class.getResource("properties.xml").getFile());
+				File ppxml=FileIO.findSiblingResource(CNST.class, "properties.xml");
+				fis = new FileInputStream(ppxml);
+				System.out.println("property.xml loaded");
+				//Msg.debugMsg(CNST.class, "property.xml loaded");
 				prop.loadFromXML(fis);
 			} catch (Exception e) {
 				e.printStackTrace();

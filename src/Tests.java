@@ -16,10 +16,9 @@ public class Tests {
 		Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
 		// get the file name of both user file and sql practice number
 		String userFileName = sqlFileNumber + ".sql";
-		String userFilePath = Tests.class.getResource(userFileName).getFile();
+		File userFile = FileIO.findSiblingResource(Tests.class, userFileName);
 		String answerSQL = "sql" + sqlFileNumber;
-		// get the corresponding file
-		File userFile = new File(userFilePath);
+
 		// show the content and result of user file
 		// test the result
 		SqlResults userSQL = FileIO.compactSQLFromFile(userFile);
