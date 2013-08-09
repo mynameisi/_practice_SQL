@@ -4,6 +4,7 @@ import helper.DB;
 import helper.FileIO;
 import helper.FileIO.SqlResults;
 import helper.Msg;
+import helper.MyDB;
 import helper.SQL;
 
 import java.io.File;
@@ -12,28 +13,27 @@ import org.junit.Test;
 
 public class Tests {
 	public boolean testSQL(int sqlFileNumber) {
-		Msg.debugSep();
 		Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
 		// get the file name of both user file and sql practice number
-		String userFileName = sqlFileNumber + ".sql";
-		File userFile = FileIO.findSiblingResource(Tests.class, userFileName);
-		String answerSQL = "sql" + sqlFileNumber;
-
-		// show the content and result of user file
-		// test the result
+		File userFile = FileIO.findSiblingResource(Tests.class, sqlFileNumber + ".sql");
 		SqlResults userSQL = FileIO.compactSQLFromFile(userFile);
 		String compactSQL = userSQL.compat.toString();
 		String fullSQL = userSQL.full.toString();
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
-		DB.resultContent(compactSQL);
+		MyDB.INSTANCE.start();
+		MyDB.INSTANCE.query(compactSQL, true);
+		//DB.resultContent(compactSQL);
 
-		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL(answerSQL));
+		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL("sql" + sqlFileNumber));
 		Msg.debugMsg(Tests.class, "Your SQL is: \n" + userSQL);
 		Msg.debugMsg(Tests.class, "The new SQL is: \n" + newSQL);
 
-		return !DB.hasResult(newSQL);
+		//boolean result=!DB.hasResult(newSQL);
+		boolean result = MyDB.INSTANCE.query(newSQL, false);
+		MyDB.INSTANCE.cleanAndShutDown();
+		return result;
 	}
-	
+
 	@Test
 	public void testSQL0() {
 		assertTrue(testSQL(0));

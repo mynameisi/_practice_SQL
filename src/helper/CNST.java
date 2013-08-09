@@ -38,19 +38,12 @@ public class CNST {
 		case "UTF-8":
 			CHAR_ENCODING = StandardCharsets.UTF_8;
 		}
-		// the following switching on String in a Java 7 new feature
-		switch (prop.getProperty("DB_NOW")) {
-		case "MySQL":
-			DRIVER = (DRIVER != null ? DRIVER : prop.getProperty("MYSQL_DRIVER"));
-			DB_URL = (DB_URL != null ? DB_URL : prop.getProperty("MYSQL_URL"));
-			USER = (USER != null ? USER : prop.getProperty("MYSQL_USER"));
-			PASS = (PASS != null ? PASS : prop.getProperty("MYSQL_PASS"));
-			break;
-		case "Oracle":
-			break;
-		case "PostgreSQL":
-			break;
-		}
+	
+		String dbNow=prop.getProperty("DB_NOW");
+		DRIVER = (DRIVER != null ? DRIVER : prop.getProperty(dbNow+"_DRIVER"));
+		DB_URL = (DB_URL != null ? DB_URL : prop.getProperty(dbNow+"_URL"));
+		USER = (USER != null ? USER : prop.getProperty(dbNow+"_USER"));
+		PASS = (PASS != null ? PASS : prop.getProperty(dbNow+"_PASS"));
 
 	}
 
