@@ -3,7 +3,7 @@ import helper.CNST;
 import helper.FileIO;
 import helper.FileIO.SqlResults;
 import helper.Msg;
-import helper.MyDB;
+import helper.DB;
 import helper.SQL;
 
 import java.io.File;
@@ -14,7 +14,7 @@ import org.junit.Test;
 public class Tests {
 	public boolean testSQL(int sqlFileNumber) {
 		try {
-			Thread.sleep(CNST.INTERVAL_JUNIT);
+			Thread.sleep(CNST.INST.INTERVAL_JUNIT);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -25,21 +25,20 @@ public class Tests {
 		String compactSQL = userSQL.compat.toString();
 		String fullSQL = userSQL.full.toString();
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
-		MyDB.INSTANCE.start();
-		MyDB.INSTANCE.query(compactSQL, true);
+		DB.INST.query(compactSQL, true);
 		//DB.resultContent(compactSQL);
 
-		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL("sql" + sqlFileNumber));
+		String newSQL = SQL.produceMius(compactSQL, CNST.INST.getSQL("sql" + sqlFileNumber));
 
 		//boolean result=!DB.hasResult(newSQL);
-		boolean result = MyDB.INSTANCE.query(newSQL, false);
+		boolean result = DB.INST.query(newSQL, false);
 		//MyDB.INSTANCE.cleanAndShutDown();
 		return result;
 	}
 	
 	@AfterClass
 	public static void shutDownDB(){
-		MyDB.INSTANCE.shutdown();
+		DB.INST.shutdown();
 	}
 
 	@Test

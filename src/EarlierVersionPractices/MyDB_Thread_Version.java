@@ -35,8 +35,8 @@ public enum MyDB_Thread_Version {
 			sdThread.setName("wgz_DB_shuttingDown_Thread");
 			sdThread.start();
 			try {
-				Class.forName(CNST.DRIVER);
-				conn = DriverManager.getConnection(CNST.DB_URL, CNST.USER, CNST.PASS);
+				Class.forName(CNST.INST.DRIVER);
+				conn = DriverManager.getConnection(CNST.INST.DB_URL, CNST.INST.USER, CNST.INST.PASS);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -60,8 +60,8 @@ public enum MyDB_Thread_Version {
 					}
 				} else {
 					try {
-						Msg.debugMsg(MyDB_Thread_Version.class, CNST.INTERVAL_DBSHUTDOWN+ " MILISEC COUNTDOWN");
-						shutDownLock.wait(CNST.INTERVAL_DBSHUTDOWN);
+						Msg.debugMsg(MyDB_Thread_Version.class, CNST.INST.INTERVAL_DBSHUTDOWN+ " MILISEC COUNTDOWN");
+						shutDownLock.wait(CNST.INST.INTERVAL_DBSHUTDOWN);
 						Msg.debugMsg(MyDB_Thread_Version.class, "waiting ended");
 					} catch (InterruptedException e) {
 						Msg.debugMsg(MyDB_Thread_Version.class, "2: restarted counting down");

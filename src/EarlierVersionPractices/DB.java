@@ -16,8 +16,8 @@ public class DB {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			Class.forName(CNST.DRIVER);
-			conn = DriverManager.getConnection(CNST.DB_URL, CNST.USER, CNST.PASS);
+			Class.forName(CNST.INST.DRIVER);
+			conn = DriverManager.getConnection(CNST.INST.DB_URL, CNST.INST.USER, CNST.INST.PASS);
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(SQL);
 			ResultSetMetaData rsMetaData = rs.getMetaData();
@@ -68,8 +68,8 @@ public class DB {
 		ResultSet rs = null;
 		Boolean result = null;
 		try {
-			Class.forName(CNST.DRIVER);
-			conn = DriverManager.getConnection(CNST.DB_URL, CNST.USER, CNST.PASS);
+			Class.forName(CNST.INST.DRIVER);
+			conn = DriverManager.getConnection(CNST.INST.DB_URL, CNST.INST.USER, CNST.INST.PASS);
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(SQL);
 			result = rs.isBeforeFirst();// 这句话SQL运行后数据库中有没有内容

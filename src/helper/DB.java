@@ -14,34 +14,23 @@ import java.util.Scanner;
  * @author Administrator
  *
  */
-public enum MyDB {
-	INSTANCE;
-	MyDB() {
-
-	}
-
-	Connection conn = null; //our connnection to the db - presist for life of program
-
-	Thread sdThread = null;
-
-	public void start() {
-		flag = true;
+public enum DB {
+	INST;
+	DB() {
 		if (conn == null) {
 			try {
-				Class.forName(CNST.DRIVER);
-				conn = DriverManager.getConnection(CNST.DB_URL, CNST.USER, CNST.PASS);
+				Class.forName(CNST.INST.DRIVER);
+				conn = DriverManager.getConnection(CNST.INST.DB_URL, CNST.INST.USER, CNST.INST.PASS);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	static boolean flag = true;
-
-	static Object shutDownLock = new Object();
+	private Connection conn = null; //our connnection to the db - presist for life of program
 
 	public void shutdown() {
-		Msg.debugMsg(MyDB.class, "Database is shutting down");
+		Msg.debugMsg(DB.class, "Database is shutting down");
 		Statement st;
 		try {
 			st = conn.createStatement();
@@ -60,13 +49,13 @@ public enum MyDB {
 	}
 
 	//use for SQL command SELECT
-	public synchronized boolean query(String sql, boolean showResult) {
+	public boolean query(String sql, boolean showResult) {
 		Statement st = null;
 		ResultSet rs = null;
 		boolean hasContent = false;
 		try {
 			st = conn.createStatement();
-			Msg.debugMsg(MyDB.class, "executing query: " + sql);
+			Msg.debugMsg(DB.class, "executing query: " + sql);
 			rs = st.executeQuery(sql);
 			hasContent = !rs.isBeforeFirst();
 			if (showResult) {
@@ -87,7 +76,7 @@ public enum MyDB {
 	}
 
 	//use for SQL commands CREATE, DROP, INSERT and UPDATE
-	public synchronized void update(String expression) throws SQLException {
+	public void update(String expression) throws SQLException {
 		Statement st = null;
 		st = conn.createStatement(); // statements
 		int i = st.executeUpdate(expression); // run the query
@@ -97,7 +86,7 @@ public enum MyDB {
 		st.close();
 	} // void update()
 
-	public synchronized void batchUpdate(File f) throws Exception {
+	public void batchUpdate(File f) throws Exception {
 		Statement st = null;
 		st = conn.createStatement(); // statements
 		Scanner sc = null;
@@ -122,7 +111,7 @@ public enum MyDB {
 		sc.close();
 	}
 
-	private static void showResultSetContent(ResultSet rs) throws SQLException {
+	private void showResultSetContent(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsMetaData = rs.getMetaData();
 		int numberOfColumns = rsMetaData.getColumnCount();
 

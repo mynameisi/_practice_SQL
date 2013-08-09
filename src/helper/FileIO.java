@@ -17,8 +17,8 @@ public class FileIO {
 	public static void redirect(){
 		PrintStream sysout=System.out;
 		PrintStream syserr=System.err;
-		File stdout=new File(CNST.STDOUT);
-		File stderr=new File(CNST.STDERR);
+		File stdout=new File(CNST.INST.STDOUT);
+		File stderr=new File(CNST.INST.STDERR);
 		try {
 			System.setOut(new PrintStream(new FileOutputStream(stdout)));
 			System.setErr(new PrintStream(new FileOutputStream(stderr)));
