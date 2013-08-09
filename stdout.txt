@@ -2,9 +2,6 @@
 你输入的SQL是:
 select name from customer;
 
-DEBUG: [class helper.MyDB   ]  wgz_DB_shuttingDown_Thread started
-DEBUG: [class helper.MyDB   ]  flag is true now
-DEBUG: [class helper.MyDB   ]  executing query: select name from customer; 
 你的SQL的结果是:
 ---------------------
 NAME                |
@@ -13,84 +10,48 @@ Bill Smith          |
 Mary Smith          |
 Bob Smith           |
 ---------------------
-DEBUG: [class helper.SQL    ]  User Input sql is: select name from customer 
-DEBUG: [class helper.SQL    ]  select list is: (name)
-DEBUG: [class helper.SQL    ]  Set Minus sql is: select name from customer where (name) not in (select name from customer );
-DEBUG: [class helper.MyDB   ]  executing query: select name from customer where (name) not in (select name from customer );
-DEBUG: [class helper.MyDB   ]  1: restarted counting down
-DEBUG: [class helper.MyDB   ]  flag is false now
-DEBUG: [class helper.MyDB   ]  500 MILISEC COUNTDOWN
 ***************SQL 1  测试***************
 你输入的SQL是:
 select city
 from customer
 where name='Bill Smith'
 
-DEBUG: [class helper.MyDB   ]  executing query: select city from customer where name='Bill Smith' 
 你的SQL的结果是:
 ---------------------
 CITY                |
 ---------------------
 Hope                |
 ---------------------
-DEBUG: [class helper.SQL    ]  User Input sql is: select city from customer where name='Bill Smith' 
-DEBUG: [class helper.SQL    ]  select list is: (city)
-DEBUG: [class helper.SQL    ]  Set Minus sql is: select city from customer where name = 'Bill Smith' and (city) not in (select city from customer where name='Bill Smith' );
-DEBUG: [class helper.MyDB   ]  executing query: select city from customer where name = 'Bill Smith' and (city) not in (select city from customer where name='Bill Smith' );
-DEBUG: [class helper.MyDB   ]  2: restarted counting down
-DEBUG: [class helper.MyDB   ]  flag is false now
-DEBUG: [class helper.MyDB   ]  500 MILISEC COUNTDOWN
 ***************SQL 2  测试***************
 你输入的SQL是:
 select address, city, state
 from customer
 where name='Bob Smith'
 
-DEBUG: [class helper.MyDB   ]  executing query: select address, city, state from customer where name='Bob Smith' 
 你的SQL的结果是:
 ---------------------------------------------------------------
 ADDRESS             |CITY                |STATE               |
 ---------------------------------------------------------------
 123 Laugh Street    |Humor               |CA                  |
 ---------------------------------------------------------------
-DEBUG: [class helper.SQL    ]  User Input sql is: select address, city, state from customer where name='Bob Smith' 
-DEBUG: [class helper.SQL    ]  select list is: (address,city,state)
-DEBUG: [class helper.SQL    ]  Set Minus sql is: select address,city,state from customer where name =
-		'Bob Smith' and (address,city,state) not in (select address, city, state from customer where name='Bob Smith' );
-DEBUG: [class helper.MyDB   ]  executing query: select address,city,state from customer where name =
-		'Bob Smith' and (address,city,state) not in (select address, city, state from customer where name='Bob Smith' );
-DEBUG: [class helper.MyDB   ]  2: restarted counting down
-DEBUG: [class helper.MyDB   ]  flag is false now
-DEBUG: [class helper.MyDB   ]  500 MILISEC COUNTDOWN
 ***************SQL 3  测试***************
 你输入的SQL是:
 select name, city, zip
 from customer
 where name like '%Bill%'
 
-DEBUG: [class helper.MyDB   ]  executing query: select name, city, zip from customer where name like '%Bill%' 
 你的SQL的结果是:
 ---------------------------------------------------------------
 NAME                |CITY                |ZIP                 |
 ---------------------------------------------------------------
 Bill Smith          |Hope                |98765               |
 ---------------------------------------------------------------
-DEBUG: [class helper.SQL    ]  User Input sql is: select name, city, zip from customer where name like '%Bill%' 
-DEBUG: [class helper.SQL    ]  select list is: (name, city, zip)
-DEBUG: [class helper.SQL    ]  Set Minus sql is: select name, city, zip from customer where name like
-		'%Bill%' and (name, city, zip) not in (select name, city, zip from customer where name like '%Bill%' );
-DEBUG: [class helper.MyDB   ]  executing query: select name, city, zip from customer where name like
-		'%Bill%' and (name, city, zip) not in (select name, city, zip from customer where name like '%Bill%' );
-DEBUG: [class helper.MyDB   ]  2: restarted counting down
-DEBUG: [class helper.MyDB   ]  flag is false now
 ***************SQL 4  测试***************
-DEBUG: [class helper.MyDB   ]  500 MILISEC COUNTDOWN
 你输入的SQL是:
 select item_id
 from sale
 where price<20
 
-DEBUG: [class helper.MyDB   ]  executing query: select item_id from sale where price<20 
 你的SQL的结果是:
 ---------------------
 ITEM_ID             |
@@ -98,42 +59,24 @@ ITEM_ID             |
 2                   |
 4                   |
 ---------------------
-DEBUG: [class helper.SQL    ]  User Input sql is: select item_id from sale where price<20 
-DEBUG: [class helper.SQL    ]  select list is: (item_id)
-DEBUG: [class helper.SQL    ]  Set Minus sql is: select item_id from sale where price<20 and (item_id) not in (select item_id from sale where price<20 );
-DEBUG: [class helper.MyDB   ]  executing query: select item_id from sale where price<20 and (item_id) not in (select item_id from sale where price<20 );
-DEBUG: [class helper.MyDB   ]  2: restarted counting down
-DEBUG: [class helper.MyDB   ]  flag is false now
-DEBUG: [class helper.MyDB   ]  500 MILISEC COUNTDOWN
 ***************SQL 5  测试***************
 你输入的SQL是:
 select item_id, price, quantity
 from sale
 where price>20 and quantity>1
 
-DEBUG: [class helper.MyDB   ]  executing query: select item_id, price, quantity from sale where price>20 and quantity>1 
 你的SQL的结果是:
 ---------------------------------------------------------------
 ITEM_ID             |PRICE               |QUANTITY            |
 ---------------------------------------------------------------
 1                   |29.95               |3                   |
 ---------------------------------------------------------------
-DEBUG: [class helper.SQL    ]  User Input sql is: select item_id, price, quantity from sale where price>20 and quantity>1 
-DEBUG: [class helper.SQL    ]  select list is: (item_id, price, quantity)
-DEBUG: [class helper.SQL    ]  Set Minus sql is: select item_id, price, quantity  from sale where
-		price>20 and quantity>11 and (item_id, price, quantity) not in (select item_id, price, quantity from sale where price>20 and quantity>1 );
-DEBUG: [class helper.MyDB   ]  executing query: select item_id, price, quantity  from sale where
-		price>20 and quantity>11 and (item_id, price, quantity) not in (select item_id, price, quantity from sale where price>20 and quantity>1 );
-DEBUG: [class helper.MyDB   ]  2: restarted counting down
-DEBUG: [class helper.MyDB   ]  flag is false now
-DEBUG: [class helper.MyDB   ]  500 MILISEC COUNTDOWN
 ***************SQL 6  测试***************
 你输入的SQL是:
 select item_id, price, quantity
 from sale
 where price in (29.95, 19.95, 9.99)
 
-DEBUG: [class helper.MyDB   ]  executing query: select item_id, price, quantity from sale where price in (29.95, 19.95, 9.99) 
 你的SQL的结果是:
 ---------------------------------------------------------------
 ITEM_ID             |PRICE               |QUANTITY            |
@@ -144,12 +87,3 @@ ITEM_ID             |PRICE               |QUANTITY            |
 4                   |9.99                |2                   |
 1                   |29.95               |1                   |
 ---------------------------------------------------------------
-DEBUG: [class helper.SQL    ]  User Input sql is: select item_id, price, quantity from sale where price in (29.95, 19.95, 9.99) 
-DEBUG: [class helper.SQL    ]  select list is: (item_id, price, quantity)
-DEBUG: [class helper.SQL    ]  Set Minus sql is: select item_id, price, quantity  from sale where price
-		in (29.95, 19,95, 9.99) and (item_id, price, quantity) not in (select item_id, price, quantity from sale where price in (29.95, 19.95, 9.99) );
-DEBUG: [class helper.MyDB   ]  executing query: select item_id, price, quantity  from sale where price
-		in (29.95, 19,95, 9.99) and (item_id, price, quantity) not in (select item_id, price, quantity from sale where price in (29.95, 19.95, 9.99) );
-DEBUG: [class helper.MyDB   ]  2: restarted counting down
-DEBUG: [class helper.MyDB   ]  flag is false now
-DEBUG: [class helper.MyDB   ]  500 MILISEC COUNTDOWN

@@ -11,7 +11,7 @@
 	<entry key="STDERR">stderr.txt</entry>
 	
 	
-	<entry key="DEBUG_MSG">true</entry><!-- 是否显示项目中的打印Debug打印语句 -->
+	<entry key="DEBUG_MSG">false</entry><!-- 是否显示项目中的打印Debug打印语句 -->
 	<entry key="USER_MSG">true</entry>
 
 	<entry key="CHAR_ENCODING">UTF-8</entry><!-- 默认字符集编码 -->

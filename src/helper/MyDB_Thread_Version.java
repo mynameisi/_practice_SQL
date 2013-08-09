@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public enum MyDB {
+public enum MyDB_Thread_Version {
 	INSTANCE;
-	MyDB() {
+	MyDB_Thread_Version() {
 
 	}
 
@@ -20,8 +20,17 @@ public enum MyDB {
 	Thread sdThread = null;
 
 	public void start() {
+		Thread.currentThread().setName("wgz_DB_Thread");
 		flag = true;
 		if (conn == null) {
+			sdThread = new Thread(new Runnable() {
+				public void run() {
+					Msg.debugMsg(MyDB_Thread_Version.class, "wgz_DB_shuttingDown_Thread started");
+					shutdown();
+				}
+			});
+			sdThread.setName("wgz_DB_shuttingDown_Thread");
+			sdThread.start();
 			try {
 				Class.forName(CNST.DRIVER);
 				conn = DriverManager.getConnection(CNST.DB_URL, CNST.USER, CNST.PASS);
@@ -36,21 +45,56 @@ public enum MyDB {
 	static Object shutDownLock = new Object();
 
 	public void shutdown() {
-		Msg.debugMsg(MyDB.class, "Database is shutting down");
-		Statement st;
-		try {
-			st = conn.createStatement();
-			st.execute("SHUTDOWN");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} // if there are no other open connection
+		synchronized (shutDownLock) {
+			while (true) {
+				Msg.debugMsg(MyDB_Thread_Version.class, "flag is "+flag+" now");
+				if (flag == true) {
+					try {
+						shutDownLock.wait();
+					} catch (InterruptedException e) {
+						Msg.debugMsg(MyDB_Thread_Version.class, "1: restarted counting down");
+						continue;
+					}
+				} else {
+					try {
+						Msg.debugMsg(MyDB_Thread_Version.class, CNST.INTERVAL_DBSHUTDOWN+ " MILISEC COUNTDOWN");
+						shutDownLock.wait(CNST.INTERVAL_DBSHUTDOWN);
+						Msg.debugMsg(MyDB_Thread_Version.class, "waiting ended");
+					} catch (InterruptedException e) {
+						Msg.debugMsg(MyDB_Thread_Version.class, "2: restarted counting down");
+						continue;
+					}
+					if (flag == false) {
+						Msg.debugMsg(MyDB_Thread_Version.class, "The database now is shutting down");
+						break;
+					}
+				}
 			}
+
+			Statement st;
+			try {
+				st = conn.createStatement();
+				st.execute("SHUTDOWN");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} // if there are no other open connection
+				}
+			}
+
+		}
+
+	}
+
+	public void cleanAndShutDown() {
+		synchronized (shutDownLock) {
+			flag = false;
+			sdThread.interrupt();
 		}
 	}
 
@@ -61,7 +105,7 @@ public enum MyDB {
 		boolean hasContent = false;
 		try {
 			st = conn.createStatement();
-			Msg.debugMsg(MyDB.class, "executing query: " + sql);
+			Msg.debugMsg(MyDB_Thread_Version.class, "executing query: " + sql);
 			rs = st.executeQuery(sql);
 			hasContent = !rs.isBeforeFirst();
 			if (showResult) {

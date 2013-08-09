@@ -8,6 +8,7 @@ import helper.SQL;
 
 import java.io.File;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 public class Tests {
@@ -32,8 +33,13 @@ public class Tests {
 
 		//boolean result=!DB.hasResult(newSQL);
 		boolean result = MyDB.INSTANCE.query(newSQL, false);
-		MyDB.INSTANCE.cleanAndShutDown();
+		//MyDB.INSTANCE.cleanAndShutDown();
 		return result;
+	}
+	
+	@AfterClass
+	public static void shutDownDB(){
+		MyDB.INSTANCE.shutdown();
 	}
 
 	@Test
