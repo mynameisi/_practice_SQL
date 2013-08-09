@@ -1,4 +1,4 @@
-package helper;
+package EarlierVersionPractices;
 
 import java.io.File;
 import java.io.PrintWriter;

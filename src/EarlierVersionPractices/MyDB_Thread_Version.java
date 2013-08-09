@@ -1,4 +1,7 @@
-package helper;
+package EarlierVersionPractices;
+
+import helper.CNST;
+import helper.Msg;
 
 import java.io.File;
 import java.sql.Connection;

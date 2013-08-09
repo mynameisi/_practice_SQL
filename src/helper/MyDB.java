@@ -8,7 +8,12 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
-
+/**
+ * 这个Enum类对数据库进行先关的操作
+ * 之所以为enum而不是utility final class，是因为他需要初始化，共享资源
+ * @author Administrator
+ *
+ */
 public enum MyDB {
 	INSTANCE;
 	MyDB() {

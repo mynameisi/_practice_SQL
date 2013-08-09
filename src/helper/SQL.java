@@ -2,8 +2,15 @@ package helper;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
-public class SQL {
+/**
+ * 这个类对SQL代码段做相应的分析
+ * @author Administrator
+ *
+ */
+public final class SQL {
+	private SQL(){
+		
+	}
 
 	public static String produceMius(String userInput, String answer) {
 		userInput = userInput.replaceAll(";", "");
