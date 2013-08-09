@@ -2,7 +2,9 @@ package helper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -12,6 +14,18 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class FileIO {
+	public static void redirect(){
+		PrintStream sysout=System.out;
+		PrintStream syserr=System.err;
+		File stdout=new File(CNST.STDOUT);
+		File stderr=new File(CNST.STDERR);
+		try {
+			System.setOut(new PrintStream(new FileOutputStream(stdout)));
+			System.setErr(new PrintStream(new FileOutputStream(stderr)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	public static File findSiblingResource(Class<?> cls, String FileName) {
 		String path = null;
 		try {

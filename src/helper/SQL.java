@@ -34,7 +34,7 @@ public class SQL {
 		String str = null;
 		while (sc.hasNext()) {
 			str = sc.next().replaceAll(",$", "").trim();
-			Msg.debugMsg(SQL.class, "str=" + str + "]");
+			//Msg.debugMsg(SQL.class, "str=" + str + "]");
 			if (!start) {
 				if (str.equals("select")) {
 					start = true;
@@ -44,7 +44,7 @@ public class SQL {
 			if (str.equals("from")) {
 				break;
 			}
-			Msg.debugMsg(SQL.class, "add[" + str + "]");
+			//Msg.debugMsg(SQL.class, "add[" + str + "]");
 			selectList.add(str);
 
 		}

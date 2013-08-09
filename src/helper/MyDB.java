@@ -20,13 +20,16 @@ public enum MyDB {
 	Thread sdThread = null;
 
 	public void start() {
+		Thread.currentThread().setName("wgz_DB_Thread");
 		flag = true;
 		if (conn == null) {
 			sdThread = new Thread(new Runnable() {
 				public void run() {
+					Msg.debugMsg(MyDB.class, "wgz_DB_shuttingDown_Thread started");
 					shutdown();
 				}
 			});
+			sdThread.setName("wgz_DB_shuttingDown_Thread");
 			sdThread.start();
 			try {
 				Class.forName(CNST.DRIVER);
@@ -49,16 +52,16 @@ public enum MyDB {
 					try {
 						shutDownLock.wait();
 					} catch (InterruptedException e) {
-						Msg.debugMsg(MyDB.class, "restarted counting down");
+						Msg.debugMsg(MyDB.class, "1: restarted counting down");
 						continue;
 					}
 				} else {
 					try {
-						Msg.debugMsg(MyDB.class, "waiting started");
-						shutDownLock.wait(1000);
+						Msg.debugMsg(MyDB.class, CNST.INTERVAL_DBSHUTDOWN+ " MILISEC COUNTDOWN");
+						shutDownLock.wait(CNST.INTERVAL_DBSHUTDOWN);
 						Msg.debugMsg(MyDB.class, "waiting ended");
 					} catch (InterruptedException e) {
-						Msg.debugMsg(MyDB.class, "restarted counting down");
+						Msg.debugMsg(MyDB.class, "2: restarted counting down");
 						continue;
 					}
 					if (flag == false) {

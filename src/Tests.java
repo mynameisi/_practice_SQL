@@ -1,6 +1,5 @@
 import static org.junit.Assert.assertTrue;
 import helper.CNST;
-import helper.DB;
 import helper.FileIO;
 import helper.FileIO.SqlResults;
 import helper.Msg;
@@ -13,6 +12,11 @@ import org.junit.Test;
 
 public class Tests {
 	public boolean testSQL(int sqlFileNumber) {
+		try {
+			Thread.sleep(CNST.INTERVAL_JUNIT);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
 		// get the file name of both user file and sql practice number
 		File userFile = FileIO.findSiblingResource(Tests.class, sqlFileNumber + ".sql");
@@ -25,8 +29,6 @@ public class Tests {
 		//DB.resultContent(compactSQL);
 
 		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL("sql" + sqlFileNumber));
-		Msg.debugMsg(Tests.class, "Your SQL is: \n" + userSQL);
-		Msg.debugMsg(Tests.class, "The new SQL is: \n" + newSQL);
 
 		//boolean result=!DB.hasResult(newSQL);
 		boolean result = MyDB.INSTANCE.query(newSQL, false);

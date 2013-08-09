@@ -2,7 +2,16 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<comment>This contains the properties of the project</comment>
-	<entry key="DEBUG_MSG">false</entry><!-- 是否显示项目中的打印Debug打印语句 -->
+	
+	<entry key="REDIRECT">true</entry>
+	<entry key="INTERVAL_JUNIT">0</entry><!-- 每一个Junit测试运行1秒 -->
+	<entry key="INTERVAL_DBSHUTDOWN">500</entry>
+	
+	<entry key="STDOUT">stdout.txt</entry>
+	<entry key="STDERR">stderr.txt</entry>
+	
+	
+	<entry key="DEBUG_MSG">true</entry><!-- 是否显示项目中的打印Debug打印语句 -->
 	<entry key="USER_MSG">true</entry>
 
 	<entry key="CHAR_ENCODING">UTF-8</entry><!-- 默认字符集编码 -->
