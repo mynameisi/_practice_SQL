@@ -14,11 +14,11 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class FileIO {
-	public static void redirect(){
-		PrintStream sysout=System.out;
-		PrintStream syserr=System.err;
-		File stdout=new File(CNST.INST.STDOUT);
-		File stderr=new File(CNST.INST.STDERR);
+	public static void redirect(String out, String err){
+		//PrintStream sysout=System.out;
+		//PrintStream syserr=System.err;
+		File stdout=new File(out);
+		File stderr=new File(err);
 		try {
 			System.setOut(new PrintStream(new FileOutputStream(stdout)));
 			System.setErr(new PrintStream(new FileOutputStream(stderr)));

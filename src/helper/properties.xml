@@ -3,10 +3,11 @@
 <properties>
 	<comment>This contains the properties of the project</comment>
 	
-	<entry key="REDIRECT">true</entry>
+	
 	<entry key="INTERVAL_JUNIT">0</entry><!-- 每一个Junit测试运行1秒 -->
 	<entry key="INTERVAL_DBSHUTDOWN">500</entry>
 	
+	<entry key="REDIRECT">true</entry>
 	<entry key="STDOUT">stdout.txt</entry>
 	<entry key="STDERR">stderr.txt</entry>
 	

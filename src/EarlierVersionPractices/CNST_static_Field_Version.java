@@ -48,7 +48,7 @@ public class CNST_static_Field_Version {
 		if(Boolean.parseBoolean(prop.getProperty("REDIRECT"))){
 			STDOUT = prop.getProperty("STDOUT");
 			STDERR = prop.getProperty("STDERR");
-			FileIO.redirect();
+			FileIO.redirect(STDOUT,STDERR);
 		}
 		
 		INTERVAL_JUNIT = Integer.parseInt(prop.getProperty("INTERVAL_JUNIT"));

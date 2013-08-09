@@ -43,9 +43,7 @@ public enum CNST {
 		}
 
 		if (Boolean.parseBoolean(prop.getProperty("REDIRECT"))) {
-			STDOUT = prop.getProperty("STDOUT");
-			STDERR = prop.getProperty("STDERR");
-			FileIO.redirect();
+			FileIO.redirect(prop.getProperty("STDOUT"), prop.getProperty("STDERR"));
 		}
 
 		INTERVAL_JUNIT = Integer.parseInt(prop.getProperty("INTERVAL_JUNIT"));
