@@ -11,19 +11,29 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class Tests {
+public class _JunitTests {
+	//final Logger logger = LoggerFactory.getLogger(_JunitTests.class);
 	public boolean testSQL(int sqlFileNumber) {
 		try {
 			Thread.sleep(CNST.INST.INTERVAL_JUNIT);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		
 		Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
-		// get the file name of both user file and sql practice number
-		File userFile = FileIO.findSiblingResource(Tests.class, sqlFileNumber + ".sql");
+		//logger.info("***************SQL " + sqlFileNumber + "  测试***************");
+		// get the file name of both user file and squeal practice number
+		File userFile = FileIO.findSiblingResource(_JunitTests.class, sqlFileNumber + ".sql");
 		SqlResults userSQL = FileIO.compactSQLFromFile(userFile);
 		String compactSQL = userSQL.compat.toString();
 		String fullSQL = userSQL.full.toString();
+		if (compactSQL.trim().isEmpty()) {
+
+			//logger.warn("你没有输入任何的SQL, 需要输入SQL才能看到结果");
+			Msg.userMsgLn("你没有输入任何的SQL, 需要输入SQL才能看到结果");
+			return false;
+		}
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
 		try {
 			CNST.INST.dbf.query(compactSQL, true);
@@ -44,8 +54,9 @@ public class Tests {
 		//MyDB.INSTANCE.cleanAndShutDown();
 		return result;
 	}
+
 	@BeforeClass
-	public static void initDB(){
+	public static void initDB() {
 		CNST.INST.initDB();
 	}
 

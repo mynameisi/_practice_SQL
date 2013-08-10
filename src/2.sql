@@ -3,7 +3,7 @@
 --Bob Smith家里的地址是什么【街道address, 城市city, 省state】
 select address, city, state
 from customer
-where name='Bob Smith'
+where lower(name) like 'bob smith'
 
 
 
