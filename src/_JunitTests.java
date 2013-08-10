@@ -1,8 +1,8 @@
 import static org.junit.Assert.assertTrue;
 import helper.CNST;
 import helper.FileIO;
-import helper.FileIO.SqlResults;
 import helper.Msg;
+import helper.FileIO.SqlResults;
 import helper.db.SQL;
 
 import java.io.File;
@@ -10,19 +10,19 @@ import java.io.File;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class _JunitTests {
-	//final Logger logger = LoggerFactory.getLogger(_JunitTests.class);
+	final static Logger logger = LoggerFactory.getLogger("_JunitTests.class");
 	public boolean testSQL(int sqlFileNumber) {
 		try {
 			Thread.sleep(CNST.INST.INTERVAL_JUNIT);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		
-		Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
-		//logger.info("***************SQL " + sqlFileNumber + "  测试***************");
+		//Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
+		logger.info("***************SQL " + sqlFileNumber + "  测试***************");
 		// get the file name of both user file and squeal practice number
 		File userFile = FileIO.findSiblingResource(_JunitTests.class, sqlFileNumber + ".sql");
 		SqlResults userSQL = FileIO.compactSQLFromFile(userFile);
@@ -40,18 +40,16 @@ public class _JunitTests {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//DB.resultContent(compactSQL);
 
 		String newSQL = SQL.produceMius(compactSQL, CNST.INST.getSQL("sql" + sqlFileNumber));
 
-		//boolean result=!DB.hasResult(newSQL);
 		boolean result = false;
 		try {
 			result = CNST.INST.dbf.query(newSQL, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//MyDB.INSTANCE.cleanAndShutDown();
+		
 		return result;
 	}
 

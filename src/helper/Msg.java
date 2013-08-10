@@ -1,4 +1,6 @@
 package helper;
+
+
 /**
  * 这个类支持所有代码段中的输出
  * 可以通过property.xml里面的参数来控制这些输出到底是否显示
@@ -10,6 +12,7 @@ public class Msg {
 	public static void debugMsg(Class<?> c, String msg) {
 		if (CNST.INST.DEBUG_MSG) {
 			System.out.printf("DEBUG: [%-20s]  %s\n", c, msg);
+			
 		}
 	}
 
