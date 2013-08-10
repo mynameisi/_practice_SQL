@@ -24,7 +24,7 @@ public class CNST {
 	public static final Boolean DEBUG_MSG;
 	public static final Boolean USER_MSG;
 
-	public static Charset CHAR_ENCODING;
+	public static final Charset CHAR_ENCODING;
 
 	//导出标准输入输出流的地址
 	//public static final String STDOUT;
@@ -61,6 +61,9 @@ public class CNST {
 
 		switch (prop.getProperty("CHAR_ENCODING")) {
 		case "UTF-8":
+			CHAR_ENCODING = StandardCharsets.UTF_8;
+			break;
+		default:
 			CHAR_ENCODING = StandardCharsets.UTF_8;
 		}
 
