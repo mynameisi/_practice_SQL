@@ -1,4 +1,6 @@
-package helper;
+package helper.db;
+
+import helper.Msg;
 
 import java.util.ArrayList;
 import java.util.Scanner;

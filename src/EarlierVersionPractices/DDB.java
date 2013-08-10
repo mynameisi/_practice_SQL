@@ -10,7 +10,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DB {
+public class DDB {
 	public static void resultContent(String SQL) {
 		Connection conn = null;
 		Statement stmt = null;
@@ -46,7 +46,7 @@ public class DB {
 			try {
 				if (rs != null) {
 					rs.close();
-					Msg.debugMsg(DB.class, "ResultSet closed");
+					Msg.debugMsg(DDB.class, "ResultSet closed");
 				}
 				if (stmt != null) {
 					stmt.close();
@@ -54,7 +54,7 @@ public class DB {
 				}
 				if (conn != null) {
 					conn.close();
-					Msg.debugMsg(DB.class, "Connection closed");
+					Msg.debugMsg(DDB.class, "Connection closed");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -79,7 +79,7 @@ public class DB {
 			try {
 				if (rs != null) {
 					rs.close();
-					Msg.debugMsg(DB.class, "ResultSet closed");
+					Msg.debugMsg(DDB.class, "ResultSet closed");
 				}
 				if (stmt != null) {
 					stmt.close();
@@ -87,7 +87,7 @@ public class DB {
 				}
 				if (conn != null) {
 					conn.close();
-					Msg.debugMsg(DB.class, "Connection closed");
+					Msg.debugMsg(DDB.class, "Connection closed");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

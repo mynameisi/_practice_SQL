@@ -3,12 +3,12 @@ import helper.CNST;
 import helper.FileIO;
 import helper.FileIO.SqlResults;
 import helper.Msg;
-import helper.DB;
-import helper.SQL;
+import helper.db.SQL;
 
 import java.io.File;
 
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class Tests {
@@ -25,20 +25,37 @@ public class Tests {
 		String compactSQL = userSQL.compat.toString();
 		String fullSQL = userSQL.full.toString();
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
-		DB.INST.query(compactSQL, true);
+		try {
+			CNST.INST.dbf.query(compactSQL, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		//DB.resultContent(compactSQL);
 
 		String newSQL = SQL.produceMius(compactSQL, CNST.INST.getSQL("sql" + sqlFileNumber));
 
 		//boolean result=!DB.hasResult(newSQL);
-		boolean result = DB.INST.query(newSQL, false);
+		boolean result = false;
+		try {
+			result = CNST.INST.dbf.query(newSQL, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		//MyDB.INSTANCE.cleanAndShutDown();
 		return result;
 	}
-	
+	@BeforeClass
+	public static void initDB(){
+		CNST.INST.initDB();
+	}
+
 	@AfterClass
-	public static void shutDownDB(){
-		DB.INST.shutdown();
+	public static void shutDownDB() {
+		try {
+			CNST.INST.dbf.shutdown();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test

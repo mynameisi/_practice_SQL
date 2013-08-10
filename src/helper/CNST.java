@@ -1,5 +1,10 @@
 package helper;
 
+import helper.db.framework.BONECP;
+import helper.db.framework.DBCP;
+import helper.db.framework.DB_Framwork;
+import helper.db.framework.DB_Regular;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
@@ -31,7 +36,14 @@ public enum CNST {
 	//关闭数据库的线程等待多长时间关闭数据库连接
 	public int INTERVAL_DBSHUTDOWN = 0;
 
+	public DB_Framwork dbf = null;
+
 	CNST() {
+		initPropertyFile();
+		initDebug();
+	}
+
+	private void initPropertyFile() {
 		prop = new Properties();
 		FileInputStream fis;
 		try {
@@ -41,27 +53,48 @@ public enum CNST {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
+	private void initDebug() {
 		if (Boolean.parseBoolean(prop.getProperty("REDIRECT"))) {
 			FileIO.redirect(prop.getProperty("STDOUT"), prop.getProperty("STDERR"));
 		}
 
 		INTERVAL_JUNIT = Integer.parseInt(prop.getProperty("INTERVAL_JUNIT"));
 		INTERVAL_DBSHUTDOWN = Integer.parseInt(prop.getProperty("INTERVAL_DBSHUTDOWN"));
-
 		DEBUG_MSG = Boolean.parseBoolean(prop.getProperty("DEBUG_MSG"));
 		USER_MSG = Boolean.parseBoolean(prop.getProperty("USER_MSG"));
+
 		switch (prop.getProperty("CHAR_ENCODING")) {
 		case "UTF-8":
 			CHAR_ENCODING = StandardCharsets.UTF_8;
 		}
+	}
+	public void initDB(){
+		initDBStrings();
+		initDBFrameWork();
+	}
 
+	private void initDBStrings() {
 		String dbNow = prop.getProperty("DB_NOW");
 		DRIVER = prop.getProperty(dbNow + "_DRIVER");
 		DB_URL = prop.getProperty(dbNow + "_URL");
 		USER = prop.getProperty(dbNow + "_USER");
 		PASS = prop.getProperty(dbNow + "_PASS");
+	}
 
+	private void initDBFrameWork() {
+		switch (prop.getProperty("DB_FRAMEWORK")) {
+		case "DB_REGULAR":
+			dbf = DB_Regular.INST;
+			break;
+		case "BONECP":
+			dbf = BONECP.INST;
+			break;
+		case "DBCP":
+			dbf = DBCP.INST;
+			break;
+		}
 	}
 
 	public String getSQL(String sqlFile) {

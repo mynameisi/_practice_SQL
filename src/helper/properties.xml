@@ -2,22 +2,23 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<comment>This contains the properties of the project</comment>
-	
-	
+
+
 	<entry key="INTERVAL_JUNIT">0</entry><!-- 每一个Junit测试运行1秒 -->
 	<entry key="INTERVAL_DBSHUTDOWN">500</entry>
-	
-	<entry key="REDIRECT">true</entry>
+
+	<entry key="REDIRECT">false</entry>
 	<entry key="STDOUT">stdout.txt</entry>
 	<entry key="STDERR">stderr.txt</entry>
-	
-	
+
+
 	<entry key="DEBUG_MSG">false</entry><!-- 是否显示项目中的打印Debug打印语句 -->
 	<entry key="USER_MSG">true</entry>
 
 	<entry key="CHAR_ENCODING">UTF-8</entry><!-- 默认字符集编码 -->
 
-	<entry key="DB_NOW">HSQLDB</entry><!-- 当前使用的数据库 -->
+	<entry key="DB_FRAMEWORK">BONECP</entry><!-- DB_REGULAR, DBCP, BONECP -->
+	<entry key="DB_NOW">HSQLDB</entry><!-- HSQLDB, MYSQL, ORACLE -->
 
 	<!-- MYSQL数据库相关配置 -->
 	<entry key="MYSQL_DRIVER">com.mysql.jdbc.Driver</entry>
@@ -30,7 +31,7 @@
 	<entry key="ORACLE_URL">jdbc:oracle:thin:hr/hr@localhost:1521/XE</entry>
 	<entry key="ORACLE_USER">root</entry>
 	<entry key="ORACLE_PASS"></entry>
-	
+
 	<!-- HSQLDB数据库相关配置 -->
 	<entry key="HSQLDB_DRIVER">org.hsqldb.jdbcDriver</entry>
 	<entry key="HSQLDB_URL">jdbc:hsqldb:file:./opt/db/testdb;shutdown=true</entry>

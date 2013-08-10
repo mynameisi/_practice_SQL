@@ -1,4 +1,7 @@
-package helper;
+package helper.db.framework;
+
+import helper.CNST;
+import helper.Msg;
 
 import java.io.File;
 import java.sql.Connection;
@@ -8,15 +11,16 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+
 /**
- * 这个Enum类对数据库进行先关的操作
- * 之所以为enum而不是utility final class，是因为他需要初始化，共享资源
+ * 这个Enum类对数据库进行先关的操作 之所以为enum而不是utility final class，是因为他需要初始化，共享资源
+ * 
  * @author Administrator
- *
+ * 
  */
-public enum DB {
+public enum DB_Regular implements DB_Framwork {
 	INST;
-	DB() {
+	DB_Regular() {
 		if (conn == null) {
 			try {
 				Class.forName(CNST.INST.DRIVER);
@@ -30,7 +34,7 @@ public enum DB {
 	private Connection conn = null; //our connnection to the db - presist for life of program
 
 	public void shutdown() {
-		Msg.debugMsg(DB.class, "Database is shutting down");
+		Msg.debugMsg(DB_Regular.class, "Database is shutting down");
 		Statement st;
 		try {
 			st = conn.createStatement();
@@ -55,7 +59,7 @@ public enum DB {
 		boolean hasContent = false;
 		try {
 			st = conn.createStatement();
-			Msg.debugMsg(DB.class, "executing query: " + sql);
+			Msg.debugMsg(DB_Regular.class, "executing query: " + sql);
 			rs = st.executeQuery(sql);
 			hasContent = !rs.isBeforeFirst();
 			if (showResult) {
@@ -76,14 +80,25 @@ public enum DB {
 	}
 
 	//use for SQL commands CREATE, DROP, INSERT and UPDATE
-	public void update(String expression) throws SQLException {
+	public void update(String expression) {
 		Statement st = null;
-		st = conn.createStatement(); // statements
-		int i = st.executeUpdate(expression); // run the query
-		if (i == -1) {
-			System.out.println("db error : " + expression);
+		try {
+			st = conn.createStatement();
+			int i = st.executeUpdate(expression); // run the query
+			if (i == -1) {
+				System.out.println("db error : " + expression);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		st.close();
+
 	} // void update()
 
 	public void batchUpdate(File f) throws Exception {
@@ -107,7 +122,6 @@ public enum DB {
 			sql = new StringBuilder();
 		}
 		System.out.println("creation done");
-		st.clearBatch();
 		sc.close();
 	}
 
