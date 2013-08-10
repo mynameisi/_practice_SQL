@@ -17,7 +17,7 @@ public class _JunitTests {
 	final static Logger logger = LoggerFactory.getLogger("_JunitTests.class");
 	public boolean testSQL(int sqlFileNumber) {
 		try {
-			Thread.sleep(CNST.INST.INTERVAL_JUNIT);
+			Thread.sleep(CNST.INTERVAL_JUNIT);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -36,16 +36,16 @@ public class _JunitTests {
 		}
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
 		try {
-			CNST.INST.dbf.query(compactSQL, true);
+			CNST.dbf.query(compactSQL, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		String newSQL = SQL.produceMius(compactSQL, CNST.INST.getSQL("sql" + sqlFileNumber));
+		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL("sql" + sqlFileNumber));
 
 		boolean result = false;
 		try {
-			result = CNST.INST.dbf.query(newSQL, false);
+			result = CNST.dbf.query(newSQL, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,13 +55,13 @@ public class _JunitTests {
 
 	@BeforeClass
 	public static void initDB() {
-		CNST.INST.initDB();
+		//CNST.initDB();
 	}
 
 	@AfterClass
 	public static void shutDownDB() {
 		try {
-			CNST.INST.dbf.shutdown();
+			CNST.dbf.shutdown();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

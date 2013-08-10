@@ -28,12 +28,12 @@ public enum DBCP implements DB_Framwork {
 	DBCP() {
 
 		try {
-			Class.forName(CNST.INST.DRIVER);
+			Class.forName(CNST.DRIVER);
 			System.out.println("Driver Registered");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		String URL = CNST.INST.DB_URL + "user=sa";
+		String URL = CNST.DB_URL + "user=sa";
 		dataSource = setupDataSource(URL);
 		System.out.println("Datasource Obtained");
 

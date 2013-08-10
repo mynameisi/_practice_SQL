@@ -14,20 +14,20 @@ import com.jolbox.bonecp.BoneCPConfig;
 
 public enum BONECP implements DB_Framwork {
 	INST;
-	BoneCP connectionPool = null;
-	Connection connection = null;
+	private BoneCP connectionPool = null;
+	//private Connection connection = null;
 
 	BONECP() {
 
 		try {
-			Class.forName(CNST.INST.DRIVER);
+			Class.forName(CNST.DRIVER);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		BoneCPConfig config = new BoneCPConfig();
-		config.setJdbcUrl(CNST.INST.DB_URL);
-		config.setUsername(CNST.INST.USER);
-		config.setPassword(CNST.INST.PASS);
+		config.setJdbcUrl(CNST.DB_URL);
+		config.setUsername(CNST.USER);
+		config.setPassword(CNST.PASS);
 		config.setMinConnectionsPerPartition(5);
 		config.setMaxConnectionsPerPartition(10);
 		config.setPartitionCount(1);

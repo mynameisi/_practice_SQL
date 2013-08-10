@@ -23,8 +23,8 @@ public enum DB_Regular implements DB_Framwork {
 	DB_Regular() {
 		if (conn == null) {
 			try {
-				Class.forName(CNST.INST.DRIVER);
-				conn = DriverManager.getConnection(CNST.INST.DB_URL, CNST.INST.USER, CNST.INST.PASS);
+				Class.forName(CNST.DRIVER);
+				conn = DriverManager.getConnection(CNST.DB_URL, CNST.USER, CNST.PASS);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
