@@ -3,6 +3,6 @@
 --那些价格小于20(元)的产品的编号是多少
 select item_id
 from sale
-where price>=20
+where price<20
 
 

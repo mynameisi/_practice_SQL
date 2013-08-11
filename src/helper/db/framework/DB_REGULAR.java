@@ -22,7 +22,7 @@ public class DB_REGULAR implements DBFrameWork {
 		if (conn == null) {
 			try {
 				Class.forName(driver);
-				conn = DriverManager.getConnection(URL, URL, pass);
+				conn = DriverManager.getConnection(URL, user, pass);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
