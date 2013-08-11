@@ -2,11 +2,13 @@ package helper.db.framework;
 
 import helper.io.Msg;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 import javax.sql.DataSource;
 
@@ -27,13 +29,11 @@ public class DBCP implements DBFrameWork {
 
 		try {
 			Class.forName(driver);
-			System.out.println("Driver Registered");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		String URL = url + "user=" + user + ";pass=" + pass;
 		dataSource = setupDataSource(URL);
-		System.out.println("Datasource Obtained");
 
 	}
 
@@ -91,6 +91,48 @@ public class DBCP implements DBFrameWork {
 			}
 		}
 
+	}
+
+	public void batchUpdate(File f) {
+		Statement st = null;
+		Connection conn = null;
+		Scanner sc = null;
+		try {
+			conn = dataSource.getConnection();
+			st = conn.createStatement(); // statements
+			sc = new Scanner(f);
+			StringBuilder sql = new StringBuilder();
+			while (sc.hasNextLine()) {
+				String sqlLine = sc.nextLine().trim();
+				if (sqlLine.startsWith("--")) {
+					continue;
+				}
+				sql.append(sqlLine + ' ');
+				if (!sqlLine.contains(";")) {
+					continue;
+				}
+				String finalSQL = sql.toString();
+				st.executeUpdate(finalSQL);
+				sql = new StringBuilder();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (sc != null) {
+					sc.close();
+				}
+				if (st != null) {
+					st.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public boolean query(String sql, boolean showResult) {

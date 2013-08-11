@@ -87,6 +87,9 @@ public class Context {
 			myDB = null;
 			break;
 		}
+		if(dbNow.equals("HSQLDB_IN_MEM")){
+			myDB.batchUpdate(FileIO.findRootResource(Context.class, "createDB.sql"));;
+		}
 		logger.info("DB Framwork ["+f+"] started");
 	}
 

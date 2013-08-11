@@ -99,28 +99,46 @@ public class DB_REGULAR implements DBFrameWork {
 
 	} // void update()
 
-	public void batchUpdate(File f) throws Exception {
+	public void batchUpdate(File f) {
 		Statement st = null;
-		st = conn.createStatement(); // statements
 		Scanner sc = null;
-		sc = new Scanner(f);
-		StringBuilder sql = new StringBuilder();
-		while (sc.hasNextLine()) {
-			String sqlLine = sc.nextLine().trim();
-			if (sqlLine.startsWith("--")) {
-				continue;
+		try {
+			st = conn.createStatement();
+
+			sc = new Scanner(f);
+			StringBuilder sql = new StringBuilder();
+			while (sc.hasNextLine()) {
+				String sqlLine = sc.nextLine().trim();
+				if (sqlLine.startsWith("--")) {
+					continue;
+				}
+				sql.append(sqlLine + ' ');
+				if (!sqlLine.contains(";")) {
+					continue;
+				}
+				String finalSQL = sql.toString();
+				st.executeUpdate(finalSQL);
+				sql = new StringBuilder();
 			}
-			sql.append(sqlLine + ' ');
-			if (!sqlLine.contains(";")) {
-				continue;
+			sc.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (sc != null) {
+					sc.close();
+				}
+				if (st != null) {
+					st.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			String finalSQL = sql.toString();
-			System.out.println(finalSQL);
-			st.executeUpdate(finalSQL);
-			sql = new StringBuilder();
 		}
-		System.out.println("creation done");
-		sc.close();
+
 	}
 
 	private void showResultSetContent(ResultSet rs) throws SQLException {
