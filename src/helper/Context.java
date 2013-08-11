@@ -45,7 +45,7 @@ public class Context {
 		prop = new Properties();
 		FileInputStream fis;
 		try {
-			File ppxml = FileIO.findSiblingResource(Context.class, "properties.xml");
+			File ppxml = FileIO.findRootResource(Context.class, "properties.xml");
 			fis = new FileInputStream(ppxml);
 			prop.loadFromXML(fis);
 		} catch (Exception e) {
