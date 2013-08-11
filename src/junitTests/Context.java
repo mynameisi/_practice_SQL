@@ -69,11 +69,10 @@ public class Context {
 		String URL = prop.getProperty(dbNow + "_URL");
 		String USER = prop.getProperty(dbNow + "_USER");
 		String PASS = prop.getProperty(dbNow + "_PASS");
-		String CLEANUP =prop.getProperty(dbNow + "_CLEANUP");
+		String CLEANUP = prop.getProperty(dbNow + "_CLEANUP");
 
-		
-		String f=prop.getProperty("DB_FRAMEWORK");
-		logger.info("STARTING DB ["+dbNow+"] within Framwork ["+f+"]");
+		String f = prop.getProperty("DB_FRAMEWORK");
+		logger.info("STARTING DB [" + dbNow + "] within Framwork [" + f + "]");
 		switch (f) {
 		case "NOPOOL":
 			myDB = new NOPOOL(DRIVER, URL, USER, PASS, CLEANUP);
@@ -82,18 +81,16 @@ public class Context {
 			myDB = new BONECP(DRIVER, URL, USER, PASS, CLEANUP);
 			break;
 		case "DBCP":
-			myDB = new DBCP(DRIVER, URL, USER, PASS,CLEANUP);
+			myDB = new DBCP(DRIVER, URL, USER, PASS, CLEANUP);
 			break;
 		default:
 			myDB = null;
 			break;
 		}
-		if(dbNow.equals("HSQLDB_IN_MEM")){
-			logger.info("BATCH UPDATING THE DB");
-			myDB.batchUpdate(FileIO.findRootResource(Context.class, "createDB.sql"));;
-		}
-		logger.info("DB ["+dbNow+"] Framwork ["+f+"] started");
-	}
+		logger.info("DB [" + dbNow + "] Framwork [" + f + "] started");
+		logger.info("BATCH UPDATING THE DB");
+		myDB.batchUpdate(FileIO.findRootResource(Context.class, "createDB.sql"));
 
+	}
 
 }
