@@ -15,7 +15,7 @@
 	<entry key="DEBUG_MSG">false</entry><!-- 是否显示项目中的打印Debug打印语句 -->
 	<entry key="USER_MSG">true</entry>
 
-	<entry key="DB_FRAMEWORK">BONECP</entry><!-- NOPOOL, DBCP, BONECP -->
+	<entry key="DB_FRAMEWORK">C3P0</entry><!-- NOPOOL, DBCP, BONECP, C3P0 -->
 	<entry key="DB_NOW">MYSQL</entry><!-- HSQLDB,HSQLDB_IN_MEM, MYSQL, ORACLE -->
 
 	<!-- MYSQL数据库相关配置 -->

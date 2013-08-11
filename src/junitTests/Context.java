@@ -1,6 +1,7 @@
 package junitTests;
 
 import helper.db.framework.BONECP;
+import helper.db.framework.C3P0;
 import helper.db.framework.DBCP;
 import helper.db.framework.DBFrameWork;
 import helper.db.framework.NOPOOL;
@@ -82,6 +83,9 @@ public class Context {
 			break;
 		case "DBCP":
 			myDB = new DBCP(DRIVER, URL, USER, PASS, CLEANUP);
+			break;
+		case "C3P0":
+			myDB = new C3P0(DRIVER, URL, USER, PASS, CLEANUP);
 			break;
 		default:
 			myDB = null;
