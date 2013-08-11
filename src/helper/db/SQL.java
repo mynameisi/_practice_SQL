@@ -1,17 +1,23 @@
 package helper.db;
 
+import helper.FileIO;
 import helper.Msg;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Scanner;
+
 /**
  * 这个类对SQL代码段做相应的分析
+ * 
  * @author Administrator
- *
+ * 
  */
 public final class SQL {
-	private SQL(){
-		
+	private SQL() {
+
 	}
 
 	public static String produceMius(String userInput, String answer) {
@@ -60,5 +66,19 @@ public final class SQL {
 		sc.close();
 		String result = selectList.toString().replace('[', '(').replace(']', ')');
 		return result;
+	}
+
+	public static String findAnwer(String qNum) {
+		Properties prop = new Properties();
+		String answer = null;
+		try {
+			//load a properties file
+			prop.load(new FileInputStream(FileIO.findSiblingResource(SQL.class, "Answers")));
+			answer = prop.getProperty(qNum);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		Msg.debugMsg(SQL.class, "Answer found is: " + answer);
+		return answer;
 	}
 }

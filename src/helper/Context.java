@@ -7,8 +7,6 @@ import helper.db.framework.DB_REGULAR;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class Context {
@@ -24,7 +22,6 @@ public class Context {
 	public static final Boolean DEBUG_MSG;
 	public static final Boolean USER_MSG;
 
-	public static final Charset CHAR_ENCODING;
 
 	//导出标准输入输出流的地址
 	//public static final String STDOUT;
@@ -66,14 +63,10 @@ public class Context {
 		DEBUG_MSG = Boolean.parseBoolean(prop.getProperty("DEBUG_MSG"));
 		USER_MSG = Boolean.parseBoolean(prop.getProperty("USER_MSG"));
 
-		switch (prop.getProperty("CHAR_ENCODING")) {
-		case "UTF-8":
-			CHAR_ENCODING = StandardCharsets.UTF_8;
-			break;
-		default:
-			CHAR_ENCODING = StandardCharsets.UTF_8;
-		}
 
+		/*
+		 * The following codes sets up the pool
+		 */
 		String dbNow = prop.getProperty("DB_NOW");
 		String DRIVER = prop.getProperty(dbNow + "_DRIVER");
 		String URL = prop.getProperty(dbNow + "_URL");
@@ -96,8 +89,8 @@ public class Context {
 		}
 	}
 
-	public static String getSQL(String sqlFile) {
-		return prop.getProperty(sqlFile);
-	}
+	//	public static String getSQL(String sqlFile) {
+	//		return prop.getProperty(sqlFile);
+	//	}
 
 }

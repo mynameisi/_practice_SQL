@@ -1,0 +1,7 @@
+sql0=select name from customer
+sql1=select city from customer where name = 'Bill Smith'
+sql2=select address,city,state from customer where name ='Bob Smith'
+sql3=select name, city, zip from customer where name like '%Bill%'
+sql4=select item_id from sale where price<20
+sql5=select item_id, price, quantity  from sale where price>20 and quantity>11
+sql6=select item_id, price, quantity  from sale where price in (29.95, 19,95, 9.99)

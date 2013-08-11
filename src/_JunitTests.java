@@ -44,7 +44,8 @@ public class _JunitTests {
 			e.printStackTrace();
 		}
 
-		String newSQL = SQL.produceMius(compactSQL, Context.getSQL("sql" + sqlFileNumber));
+		String answer = SQL.findAnwer("sql" + sqlFileNumber);
+		String newSQL = SQL.produceMius(compactSQL, answer);
 
 		boolean result = false;
 		try {

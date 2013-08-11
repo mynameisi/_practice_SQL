@@ -15,8 +15,6 @@
 	<entry key="DEBUG_MSG">false</entry><!-- 是否显示项目中的打印Debug打印语句 -->
 	<entry key="USER_MSG">true</entry>
 
-	<entry key="CHAR_ENCODING">UTF-8</entry><!-- 默认字符集编码 -->
-
 	<entry key="DB_FRAMEWORK">BONECP</entry><!-- DB_REGULAR, DBCP, BONECP -->
 	<entry key="DB_NOW">HSQLDB</entry><!-- HSQLDB, MYSQL, ORACLE -->
 
@@ -38,17 +36,5 @@
 	<entry key="HSQLDB_USER">sa</entry>
 	<entry key="HSQLDB_PASS"></entry>
 
-	<!-- SQL答案 -->
-	<entry key="sql0">select name from customer</entry>
-	<entry key="sql1">select city from customer where name = 'Bill Smith'</entry>
-	<entry key="sql2">select address,city,state from customer where name =
-		'Bob Smith'</entry>
-	<entry key="sql3">select name, city, zip from customer where name like
-		'%Bill%'</entry>
-	<entry key="sql4">select item_id from sale where price&lt;20</entry>
-	<entry key="sql5">select item_id, price, quantity  from sale where
-		price&gt;20 and quantity&gt;11</entry>
-	<entry key="sql6">select item_id, price, quantity  from sale where price
-		in (29.95, 19,95, 9.99)</entry>
 
 </properties>

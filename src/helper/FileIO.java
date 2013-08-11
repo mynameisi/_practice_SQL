@@ -38,6 +38,19 @@ public class FileIO {
 		File file = new File(path);
 		return file;
 	}
+	
+	public static File findRootResource(Class<?> cls, String FileName) {
+		String path = null;
+		try {
+			//如果不用toURI，当文件路径中有空格时，以下方法就会出错，因为getResource返回的URL会把空格转化成 %20
+			URL url=cls.getClassLoader().getResource(FileName);
+			path = url.toURI().getPath();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		File file = new File(path);
+		return file;
+	}
 
 	public static String readFile(File f, Charset encoding) {
 		String path = f.getAbsolutePath();
