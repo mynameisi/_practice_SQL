@@ -43,6 +43,7 @@ public class BONECP extends DB implements DBFrameWork {
 	public void shutdown() {
 		try {
 			cleanUP(connectionPool.getConnection(), cleanUPSQL, FileIO.findRootResource(BONECP.class, "dropDB.sql"));
+			connectionPool.shutdown();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

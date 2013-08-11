@@ -14,7 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class DB {
-	protected DB(){}
+	protected DB() {}
+
 	public static final Logger logger = LoggerFactory.getLogger(DB.class);
 
 	public void cleanUP(Connection conn, String sql, File f) {
@@ -29,7 +30,7 @@ public abstract class DB {
 		try {
 			conn.setAutoCommit(false);
 			st = conn.createStatement(); // statements
-			
+
 			if (f != null && f.isFile()) {
 				sc = new Scanner(f);
 				StringBuilder sqlBuilder = new StringBuilder();
@@ -49,9 +50,11 @@ public abstract class DB {
 			}
 			//since the one line command is usually "SHUTDOWN"
 			//so it can't happen before the dropping table lines from the file
+
 			if (sql != null && !sql.isEmpty()) {
 				st.addBatch(sql);
 			}
+			logger.debug("START BATCH UPDATE");
 			st.executeBatch();
 			conn.commit();
 		} catch (Exception e) {

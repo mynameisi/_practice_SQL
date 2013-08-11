@@ -16,7 +16,7 @@
 	<entry key="USER_MSG">true</entry>
 
 	<entry key="DB_FRAMEWORK">BONECP</entry><!-- NOPOOL, DBCP, BONECP -->
-	<entry key="DB_NOW">HSQLDB</entry><!-- HSQLDB,HSQLDB_IN_MEM, MYSQL, ORACLE -->
+	<entry key="DB_NOW">MYSQL</entry><!-- HSQLDB,HSQLDB_IN_MEM, MYSQL, ORACLE -->
 
 	<!-- MYSQL数据库相关配置 -->
 	<entry key="MYSQL_DRIVER">com.mysql.jdbc.Driver</entry>
