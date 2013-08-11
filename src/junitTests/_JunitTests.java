@@ -1,12 +1,11 @@
 package junitTests;
 
 import static org.junit.Assert.assertTrue;
-import helper.Context;
-import helper.FileIO;
-import helper.FileIO.SqlResults;
-import helper.Msg;
 import helper.db.SQL;
 import helper.db.framework.DBFrameWork;
+import helper.io.FileIO;
+import helper.io.Msg;
+import helper.io.FileIO.SqlResults;
 
 import java.io.File;
 

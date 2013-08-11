@@ -1,6 +1,6 @@
 package helper.db.framework;
 
-import helper.Msg;
+import helper.io.Msg;
 
 import java.io.File;
 import java.sql.Connection;

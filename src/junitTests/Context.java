@@ -1,9 +1,10 @@
-package helper;
+package junitTests;
 
 import helper.db.framework.BONECP;
 import helper.db.framework.DBCP;
 import helper.db.framework.DBFrameWork;
 import helper.db.framework.DB_REGULAR;
+import helper.io.FileIO;
 
 import java.io.File;
 import java.io.FileInputStream;

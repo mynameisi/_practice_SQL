@@ -1,7 +1,7 @@
 package helper.db;
 
-import helper.FileIO;
-import helper.Msg;
+import helper.io.FileIO;
+import helper.io.Msg;
 
 import java.io.FileInputStream;
 import java.io.IOException;
