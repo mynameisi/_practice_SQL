@@ -11,7 +11,7 @@ import java.sql.Statement;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
-public class BONECP implements DB_Framwork {
+public class BONECP implements DBFrameWork {
 	private BoneCP connectionPool = null;
 
 	public BONECP(String Driver, String URL, String user, String pass) {
@@ -37,7 +37,7 @@ public class BONECP implements DB_Framwork {
 	}
 
 	public void shutdown() {
-		Msg.debugMsg(DB_Framwork.class, "Database is shutting down");
+		Msg.debugMsg(DBFrameWork.class, "Database is shutting down");
 		Statement st = null;
 		Connection conn = null;
 		try {

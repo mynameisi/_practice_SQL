@@ -2,7 +2,7 @@ package helper;
 
 import helper.db.framework.BONECP;
 import helper.db.framework.DBCP;
-import helper.db.framework.DB_Framwork;
+import helper.db.framework.DBFrameWork;
 import helper.db.framework.DB_REGULAR;
 
 import java.io.File;
@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-public class CNST {
+public class Context {
 	private static final Properties prop;
 
 	//数据库相关字段
@@ -38,13 +38,17 @@ public class CNST {
 	//use this interface approach
 	//1. it shields the user from doing anything to the database
 	//2. it enables this resource to be globally available
-	public static final DB_Framwork myDB;
+	private static final DBFrameWork myDB;
+
+	public static DBFrameWork getMyDB() {
+		return myDB;
+	}
 
 	static {
 		prop = new Properties();
 		FileInputStream fis;
 		try {
-			File ppxml = FileIO.findSiblingResource(CNST.class, "properties.xml");
+			File ppxml = FileIO.findSiblingResource(Context.class, "properties.xml");
 			fis = new FileInputStream(ppxml);
 			prop.loadFromXML(fis);
 		} catch (Exception e) {
@@ -78,13 +82,13 @@ public class CNST {
 
 		switch (prop.getProperty("DB_FRAMEWORK")) {
 		case "DB_REGULAR":
-			myDB = new DB_REGULAR(DRIVER,URL,USER,PASS);
+			myDB = new DB_REGULAR(DRIVER, URL, USER, PASS);
 			break;
 		case "BONECP":
-			myDB = new BONECP(DRIVER,URL,USER,PASS);
+			myDB = new BONECP(DRIVER, URL, USER, PASS);
 			break;
 		case "DBCP":
-			myDB = new DBCP(DRIVER,URL,USER,PASS);
+			myDB = new DBCP(DRIVER, URL, USER, PASS);
 			break;
 		default:
 			myDB = null;

@@ -17,7 +17,7 @@ import java.util.Scanner;
  * @author Administrator
  * 
  */
-public class DB_REGULAR implements DB_Framwork {
+public class DB_REGULAR implements DBFrameWork {
 	public DB_REGULAR(String driver, String URL, String user, String pass) {
 		if (conn == null) {
 			try {

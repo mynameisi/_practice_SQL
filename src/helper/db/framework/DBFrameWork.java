@@ -1,6 +1,6 @@
 package helper.db.framework;
 
-public interface DB_Framwork {
+public interface DBFrameWork {
 	public boolean query(String sql, boolean ShowResult);
 	//public void start();
 	public void shutdown();

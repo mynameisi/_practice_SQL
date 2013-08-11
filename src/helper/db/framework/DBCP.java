@@ -18,7 +18,7 @@ import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
-public class DBCP implements DB_Framwork {
+public class DBCP implements DBFrameWork {
 
 	private DataSource dataSource = null;
 	GenericObjectPool<?> connectionPool = new GenericObjectPool<Object>();
@@ -38,7 +38,7 @@ public class DBCP implements DB_Framwork {
 	}
 
 	public void shutdown() {
-		Msg.debugMsg(DB_Framwork.class, "Database is shutting down");
+		Msg.debugMsg(DBFrameWork.class, "Database is shutting down");
 		Statement st = null;
 		Connection conn = null;
 		try {

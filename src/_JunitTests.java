@@ -1,9 +1,10 @@
 import static org.junit.Assert.assertTrue;
-import helper.CNST;
+import helper.Context;
 import helper.FileIO;
-import helper.Msg;
 import helper.FileIO.SqlResults;
+import helper.Msg;
 import helper.db.SQL;
+import helper.db.framework.DBFrameWork;
 
 import java.io.File;
 
@@ -15,9 +16,11 @@ import org.slf4j.LoggerFactory;
 
 public class _JunitTests {
 	final static Logger logger = LoggerFactory.getLogger("_JunitTests.class");
+	final static DBFrameWork myDB = Context.getMyDB();
+
 	public boolean testSQL(int sqlFileNumber) {
 		try {
-			Thread.sleep(CNST.INTERVAL_JUNIT);
+			Thread.sleep(Context.INTERVAL_JUNIT);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -36,20 +39,20 @@ public class _JunitTests {
 		}
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
 		try {
-			CNST.myDB.query(compactSQL, true);
+			myDB.query(compactSQL, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		String newSQL = SQL.produceMius(compactSQL, CNST.getSQL("sql" + sqlFileNumber));
+		String newSQL = SQL.produceMius(compactSQL, Context.getSQL("sql" + sqlFileNumber));
 
 		boolean result = false;
 		try {
-			result = CNST.myDB.query(newSQL, false);
+			result = myDB.query(newSQL, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -61,7 +64,7 @@ public class _JunitTests {
 	@AfterClass
 	public static void shutDownDB() {
 		try {
-			CNST.myDB.shutdown();
+			myDB.shutdown();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
