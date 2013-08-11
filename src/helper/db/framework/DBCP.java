@@ -8,43 +8,58 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 import java.util.Scanner;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.ConnectionFactory;
-import org.apache.commons.dbcp.DriverManagerConnectionFactory;
-import org.apache.commons.dbcp.PoolableConnectionFactory;
-import org.apache.commons.dbcp.PoolingDataSource;
-import org.apache.commons.pool.KeyedObjectPoolFactory;
-import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSourceFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
 public class DBCP implements DBFrameWork {
 
 	private DataSource dataSource = null;
+	private final String cleanUp;
 	GenericObjectPool<?> connectionPool = new GenericObjectPool<Object>();
 
-	public DBCP(String driver, String url, String user, String pass) {
+	public DBCP(String driver, String url, String user, String pass, String cleanUp) {
 
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		String URL = url + "user=" + user + ";pass=" + pass;
-		dataSource = setupDataSource(URL);
-
+		Properties dbcpProperties = new Properties();
+		dbcpProperties.put("url", url);
+		dbcpProperties.put("username", user);
+		dbcpProperties.put("password", pass);
+		try {
+			dataSource = (BasicDataSource) BasicDataSourceFactory.createDataSource(dbcpProperties);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.cleanUp = cleanUp;
 	}
 
 	public void shutdown() {
-		Msg.debugMsg(DBFrameWork.class, "Database is shutting down");
+		//Msg.debugMsg(DBFrameWork.class, "Database is shutting down");
+		if (cleanUp == null || cleanUp.isEmpty()) {
+			if (connectionPool != null) {
+				try {
+					connectionPool.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return;
+		}
 		Statement st = null;
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			st = conn.createStatement();
-			st.execute("SHUTDOWN");
+			st.execute(cleanUp);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -99,6 +114,7 @@ public class DBCP implements DBFrameWork {
 		Scanner sc = null;
 		try {
 			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
 			st = conn.createStatement(); // statements
 			sc = new Scanner(f);
 			StringBuilder sql = new StringBuilder();
@@ -112,10 +128,11 @@ public class DBCP implements DBFrameWork {
 					continue;
 				}
 				String finalSQL = sql.toString();
-				st.executeUpdate(finalSQL);
+				//logger.warn("finalSQL"+finalSQL);//prints all the SQL got from the file
+				st.addBatch(finalSQL);
 				sql = new StringBuilder();
 			}
-
+			st.executeBatch();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -204,43 +221,4 @@ public class DBCP implements DBFrameWork {
 		Msg.userSep(numberOfColumns, '-');
 	} //void dump( ResultSet rs )
 
-	public DataSource setupDataSource(String connectURI) {
-		//
-		// First, we'll create a ConnectionFactory that the
-		// pool will use to create Connections.
-		// We'll use the DriverManagerConnectionFactory,
-		// using the connect string passed in the command line
-		// arguments.
-		//
-		ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(connectURI, null);
-
-		KeyedObjectPoolFactory<?, ?> statementPool = new GenericKeyedObjectPoolFactory<Object, Object>(null);
-
-		//
-		// Next we'll create the PoolableConnectionFactory, which wraps
-		// the "real" Connections created by the ConnectionFactory with
-		// the classes that implement the pooling functionality.
-		//
-
-		@SuppressWarnings("unused")
-		PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory, connectionPool, statementPool, connectURI, false, false);
-		//
-		// Now we'll need a ObjectPool that serves as the
-		// actual pool of connections.
-		//
-		// We'll use a GenericObjectPool instance, although
-		// any ObjectPool implementation will suffice.
-		//
-		//@SuppressWarnings("unchecked")
-		//GenericObjectPool<?> cp = new GenericObjectPool<Object>(poolableConnectionFactory);
-
-		//
-		// Finally, we create the PoolingDriver itself,
-		// passing in the object pool we created.
-		//
-		//cp.setMaxActive(100);
-		PoolingDataSource dataSource = new PoolingDataSource(connectionPool);
-
-		return dataSource;
-	}
 }

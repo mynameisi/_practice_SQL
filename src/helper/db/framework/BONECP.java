@@ -10,14 +10,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
 public class BONECP implements DBFrameWork {
 	private BoneCP connectionPool = null;
+	private final String cleanUp;
 
-	public BONECP(String Driver, String URL, String user, String pass) {
+	@SuppressWarnings("unused")
+	//I may use logger later
+	private static final Logger logger = LoggerFactory.getLogger(BONECP.class);
 
+	public BONECP(String Driver, String URL, String user, String pass, String cleanUp) {
+		this.cleanUp = cleanUp;
 		try {
 			Class.forName(Driver);
 		} catch (ClassNotFoundException e) {
@@ -39,13 +47,23 @@ public class BONECP implements DBFrameWork {
 	}
 
 	public void shutdown() {
-		Msg.debugMsg(DBFrameWork.class, "Database is shutting down");
+		//Msg.debugMsg(DBFrameWork.class, "Database is shutting down");
+		if (cleanUp==null || cleanUp.isEmpty()) {
+			if (connectionPool != null) {
+				try {
+					connectionPool.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return;
+		}
 		Statement st = null;
 		Connection conn = null;
 		try {
 			conn = connectionPool.getConnection();
 			st = conn.createStatement();
-			st.execute("SHUTDOWN");
+			st.execute(cleanUp);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -100,6 +118,7 @@ public class BONECP implements DBFrameWork {
 		Scanner sc = null;
 		try {
 			conn = connectionPool.getConnection();
+			conn.setAutoCommit(false);
 			st = conn.createStatement(); // statements
 			sc = new Scanner(f);
 			StringBuilder sql = new StringBuilder();
@@ -113,9 +132,11 @@ public class BONECP implements DBFrameWork {
 					continue;
 				}
 				String finalSQL = sql.toString();
-				st.executeUpdate(finalSQL);
+				//logger.warn("finalSQL"+finalSQL);//prints all the SQL got from the file
+				st.addBatch(finalSQL);
 				sql = new StringBuilder();
 			}
+			st.executeBatch();
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -3,7 +3,7 @@ package junitTests;
 import helper.db.framework.BONECP;
 import helper.db.framework.DBCP;
 import helper.db.framework.DBFrameWork;
-import helper.db.framework.DB_REGULAR;
+import helper.db.framework.NOPOOL;
 import helper.io.FileIO;
 
 import java.io.File;
@@ -69,32 +69,31 @@ public class Context {
 		String URL = prop.getProperty(dbNow + "_URL");
 		String USER = prop.getProperty(dbNow + "_USER");
 		String PASS = prop.getProperty(dbNow + "_PASS");
+		String CLEANUP =prop.getProperty(dbNow + "_CLEANUP");
 
 		
 		String f=prop.getProperty("DB_FRAMEWORK");
-		logger.info("STARTING DB Framwork ["+f+"]");
+		logger.info("STARTING DB ["+dbNow+"] within Framwork ["+f+"]");
 		switch (f) {
-		case "DB_REGULAR":
-			myDB = new DB_REGULAR(DRIVER, URL, USER, PASS);
+		case "NOPOOL":
+			myDB = new NOPOOL(DRIVER, URL, USER, PASS, CLEANUP);
 			break;
 		case "BONECP":
-			myDB = new BONECP(DRIVER, URL, USER, PASS);
+			myDB = new BONECP(DRIVER, URL, USER, PASS, CLEANUP);
 			break;
 		case "DBCP":
-			myDB = new DBCP(DRIVER, URL, USER, PASS);
+			myDB = new DBCP(DRIVER, URL, USER, PASS,CLEANUP);
 			break;
 		default:
 			myDB = null;
 			break;
 		}
 		if(dbNow.equals("HSQLDB_IN_MEM")){
+			logger.info("BATCH UPDATING THE DB");
 			myDB.batchUpdate(FileIO.findRootResource(Context.class, "createDB.sql"));;
 		}
-		logger.info("DB Framwork ["+f+"] started");
+		logger.info("DB ["+dbNow+"] Framwork ["+f+"] started");
 	}
 
-	//	public static String getSQL(String sqlFile) {
-	//		return prop.getProperty(sqlFile);
-	//	}
 
 }

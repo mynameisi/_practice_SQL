@@ -15,32 +15,37 @@
 	<entry key="DEBUG_MSG">false</entry><!-- 是否显示项目中的打印Debug打印语句 -->
 	<entry key="USER_MSG">true</entry>
 
-	<entry key="DB_FRAMEWORK">DBCP</entry><!-- DB_REGULAR, DBCP, BONECP -->
-	<entry key="DB_NOW">HSQLDB_IN_MEM</entry><!-- HSQLDB,HSQLDB_IN_MEM, MYSQL, ORACLE -->
+	<entry key="DB_FRAMEWORK">NOPOOL</entry><!-- NOPOOL, DBCP, BONECP -->
+	<entry key="DB_NOW">HSQLDB</entry><!-- HSQLDB,HSQLDB_IN_MEM, MYSQL, ORACLE -->
 
 	<!-- MYSQL数据库相关配置 -->
 	<entry key="MYSQL_DRIVER">com.mysql.jdbc.Driver</entry>
 	<entry key="MYSQL_URL">jdbc:mysql://localhost:3306/test</entry>
 	<entry key="MYSQL_USER">root</entry>
 	<entry key="MYSQL_PASS"></entry>
+	<entry key="HSQLDB_CLEANUP"></entry>
 
 	<!-- ORACLE数据库相关配置 -->
 	<entry key="ORACLE_DRIVER">oracle.jdbc.OracleDriver</entry>
 	<entry key="ORACLE_URL">jdbc:oracle:thin:hr/hr@localhost:1521/XE</entry>
 	<entry key="ORACLE_USER">root</entry>
 	<entry key="ORACLE_PASS"></entry>
+	<entry key="HSQLDB_CLEANUP"></entry>
 
 	<!-- HSQLDB数据库相关配置 -->
 	<entry key="HSQLDB_DRIVER">org.hsqldb.jdbcDriver</entry>
 	<entry key="HSQLDB_URL">jdbc:hsqldb:file:./opt/db/testdb;shutdown=true</entry>
 	<entry key="HSQLDB_USER">sa</entry>
 	<entry key="HSQLDB_PASS"></entry>
+	<entry key="HSQLDB_CLEANUP">SHUTDOWN</entry>
 	
 	<!-- HSQLDB_IN_MEM 数据库相关配置 -->
 	<entry key="HSQLDB_IN_MEM_DRIVER">org.hsqldb.jdbcDriver</entry>
-	<entry key="HSQLDB_IN_MEM_URL">jdbc:hsqldb:mem:testdb;shutdown=true</entry>
+	<!-- make sure not to auto shutdown DB with in mem db, otherwise with nopool framework won't work -->
+	<entry key="HSQLDB_IN_MEM_URL">jdbc:hsqldb:mem:testdb</entry> 
 	<entry key="HSQLDB_IN_MEM_USER">sa</entry>
 	<entry key="HSQLDB_IN_MEM_PASS"></entry>
+	<entry key="HSQLDB_CLEANUP">SHUTDOWN</entry>
 
 
 </properties>
