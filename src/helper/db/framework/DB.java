@@ -13,7 +13,8 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DB {
+public abstract class DB {
+	protected DB(){}
 	public static final Logger logger = LoggerFactory.getLogger(DB.class);
 
 	public void cleanUP(Connection conn, String sql, File f) {
