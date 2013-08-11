@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class _JunitTests {
+public class JunitTests {
 	final static Logger logger = LoggerFactory.getLogger("_JunitTests.class");
 	final static DBFrameWork myDB = Context.getMyDB();
 
@@ -28,7 +28,7 @@ public class _JunitTests {
 		//Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
 		logger.info("***************SQL " + sqlFileNumber + "  测试***************");
 		// get the file name of both user file and squeal practice number
-		File userFile = FileIO.findRootResource(_JunitTests.class, sqlFileNumber + ".sql");
+		File userFile = FileIO.findRootResource(JunitTests.class, sqlFileNumber + ".sql");
 		SqlResults userSQL = FileIO.compactSQLFromFile(userFile);
 		//get the compact and full version of user input sql
 		String compactSQL = userSQL.compat.toString();
