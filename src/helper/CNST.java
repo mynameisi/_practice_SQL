@@ -3,7 +3,7 @@ package helper;
 import helper.db.framework.BONECP;
 import helper.db.framework.DBCP;
 import helper.db.framework.DB_Framwork;
-import helper.db.framework.DB_Regular;
+import helper.db.framework.DB_REGULAR;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,10 +15,10 @@ public class CNST {
 	private static final Properties prop;
 
 	//数据库相关字段
-	public static final String DRIVER;
-	public static final String DB_URL;
-	public static final String USER;
-	public static final String PASS;
+	//	private static final String DRIVER;
+	//	private static final String URL;
+	//	private static final String USER;
+	//	private static final String PASS;
 
 	//用来控制Msg类-->从而控制在运行程序时显示何种信息
 	public static final Boolean DEBUG_MSG;
@@ -35,7 +35,10 @@ public class CNST {
 	//关闭数据库的线程等待多长时间关闭数据库连接
 	public static final int INTERVAL_DBSHUTDOWN;
 
-	public static final DB_Framwork dbf;
+	//use this interface approach
+	//1. it shields the user from doing anything to the database
+	//2. it enables this resource to be globally available
+	public static final DB_Framwork myDB;
 
 	static {
 		prop = new Properties();
@@ -68,23 +71,23 @@ public class CNST {
 		}
 
 		String dbNow = prop.getProperty("DB_NOW");
-		DRIVER = prop.getProperty(dbNow + "_DRIVER");
-		DB_URL = prop.getProperty(dbNow + "_URL");
-		USER = prop.getProperty(dbNow + "_USER");
-		PASS = prop.getProperty(dbNow + "_PASS");
+		String DRIVER = prop.getProperty(dbNow + "_DRIVER");
+		String URL = prop.getProperty(dbNow + "_URL");
+		String USER = prop.getProperty(dbNow + "_USER");
+		String PASS = prop.getProperty(dbNow + "_PASS");
 
 		switch (prop.getProperty("DB_FRAMEWORK")) {
 		case "DB_REGULAR":
-			dbf = DB_Regular.INST;
+			myDB = new DB_REGULAR(DRIVER,URL,USER,PASS);
 			break;
 		case "BONECP":
-			dbf = BONECP.INST;
+			myDB = new BONECP(DRIVER,URL,USER,PASS);
 			break;
 		case "DBCP":
-			dbf = DBCP.INST;
+			myDB = new DBCP(DRIVER,URL,USER,PASS);
 			break;
 		default:
-			dbf = null;
+			myDB = null;
 			break;
 		}
 	}

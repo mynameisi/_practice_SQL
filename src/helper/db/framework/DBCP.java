@@ -1,6 +1,5 @@
 package helper.db.framework;
 
-import helper.CNST;
 import helper.Msg;
 
 import java.sql.Connection;
@@ -19,21 +18,20 @@ import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
-public enum DBCP implements DB_Framwork {
-	INST;
+public class DBCP implements DB_Framwork {
 
 	private DataSource dataSource = null;
 	GenericObjectPool<?> connectionPool = new GenericObjectPool<Object>();
 
-	DBCP() {
+	public DBCP(String driver, String url, String user, String pass) {
 
 		try {
-			Class.forName(CNST.DRIVER);
+			Class.forName(driver);
 			System.out.println("Driver Registered");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		String URL = CNST.DB_URL + "user=sa";
+		String URL = url + "user=" + user + ";pass=" + pass;
 		dataSource = setupDataSource(URL);
 		System.out.println("Datasource Obtained");
 

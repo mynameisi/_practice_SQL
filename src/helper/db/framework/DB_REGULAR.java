@@ -1,6 +1,5 @@
 package helper.db.framework;
 
-import helper.CNST;
 import helper.Msg;
 
 import java.io.File;
@@ -18,13 +17,12 @@ import java.util.Scanner;
  * @author Administrator
  * 
  */
-public enum DB_Regular implements DB_Framwork {
-	INST;
-	DB_Regular() {
+public class DB_REGULAR implements DB_Framwork {
+	public DB_REGULAR(String driver, String URL, String user, String pass) {
 		if (conn == null) {
 			try {
-				Class.forName(CNST.DRIVER);
-				conn = DriverManager.getConnection(CNST.DB_URL, CNST.USER, CNST.PASS);
+				Class.forName(driver);
+				conn = DriverManager.getConnection(URL, URL, pass);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -34,7 +32,7 @@ public enum DB_Regular implements DB_Framwork {
 	private Connection conn = null; //our connnection to the db - presist for life of program
 
 	public void shutdown() {
-		Msg.debugMsg(DB_Regular.class, "Database is shutting down");
+		Msg.debugMsg(DB_REGULAR.class, "Database is shutting down");
 		Statement st;
 		try {
 			st = conn.createStatement();
@@ -59,7 +57,7 @@ public enum DB_Regular implements DB_Framwork {
 		boolean hasContent = false;
 		try {
 			st = conn.createStatement();
-			Msg.debugMsg(DB_Regular.class, "executing query: " + sql);
+			Msg.debugMsg(DB_REGULAR.class, "executing query: " + sql);
 			rs = st.executeQuery(sql);
 			hasContent = !rs.isBeforeFirst();
 			if (showResult) {

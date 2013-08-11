@@ -1,6 +1,5 @@
 package helper.db.framework;
 
-import helper.CNST;
 import helper.Msg;
 
 import java.sql.Connection;
@@ -12,22 +11,20 @@ import java.sql.Statement;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
-public enum BONECP implements DB_Framwork {
-	INST;
+public class BONECP implements DB_Framwork {
 	private BoneCP connectionPool = null;
-	//private Connection connection = null;
 
-	BONECP() {
+	public BONECP(String Driver, String URL, String user, String pass) {
 
 		try {
-			Class.forName(CNST.DRIVER);
+			Class.forName(Driver);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		BoneCPConfig config = new BoneCPConfig();
-		config.setJdbcUrl(CNST.DB_URL);
-		config.setUsername(CNST.USER);
-		config.setPassword(CNST.PASS);
+		config.setJdbcUrl(URL);
+		config.setUsername(user);
+		config.setPassword(pass);
 		config.setMinConnectionsPerPartition(5);
 		config.setMaxConnectionsPerPartition(10);
 		config.setPartitionCount(1);

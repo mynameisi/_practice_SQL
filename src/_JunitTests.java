@@ -36,7 +36,7 @@ public class _JunitTests {
 		}
 		Msg.userMsgLn("你输入的SQL是:\n" + fullSQL);
 		try {
-			CNST.dbf.query(compactSQL, true);
+			CNST.myDB.query(compactSQL, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,7 +45,7 @@ public class _JunitTests {
 
 		boolean result = false;
 		try {
-			result = CNST.dbf.query(newSQL, false);
+			result = CNST.myDB.query(newSQL, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,7 +61,7 @@ public class _JunitTests {
 	@AfterClass
 	public static void shutDownDB() {
 		try {
-			CNST.dbf.shutdown();
+			CNST.myDB.shutdown();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
