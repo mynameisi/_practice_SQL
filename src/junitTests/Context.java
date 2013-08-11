@@ -10,19 +10,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Context {
 	private static final Properties prop;
-
-	//数据库相关字段
-	//	private static final String DRIVER;
-	//	private static final String URL;
-	//	private static final String USER;
-	//	private static final String PASS;
 
 	//用来控制Msg类-->从而控制在运行程序时显示何种信息
 	public static final Boolean DEBUG_MSG;
 	public static final Boolean USER_MSG;
-
 
 	//导出标准输入输出流的地址
 	//public static final String STDOUT;
@@ -42,6 +38,7 @@ public class Context {
 		return myDB;
 	}
 
+	private static final Logger logger = LoggerFactory.getLogger(Context.class);
 	static {
 		prop = new Properties();
 		FileInputStream fis;
@@ -64,7 +61,6 @@ public class Context {
 		DEBUG_MSG = Boolean.parseBoolean(prop.getProperty("DEBUG_MSG"));
 		USER_MSG = Boolean.parseBoolean(prop.getProperty("USER_MSG"));
 
-
 		/*
 		 * The following codes sets up the pool
 		 */
@@ -74,7 +70,10 @@ public class Context {
 		String USER = prop.getProperty(dbNow + "_USER");
 		String PASS = prop.getProperty(dbNow + "_PASS");
 
-		switch (prop.getProperty("DB_FRAMEWORK")) {
+		
+		String f=prop.getProperty("DB_FRAMEWORK");
+		logger.info("STARTING DB Framwork ["+f+"]");
+		switch (f) {
 		case "DB_REGULAR":
 			myDB = new DB_REGULAR(DRIVER, URL, USER, PASS);
 			break;
@@ -88,6 +87,7 @@ public class Context {
 			myDB = null;
 			break;
 		}
+		logger.info("DB Framwork ["+f+"] started");
 	}
 
 	//	public static String getSQL(String sqlFile) {

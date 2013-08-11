@@ -25,8 +25,7 @@ public class JunitTests {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		//Msg.userMsgLn("***************SQL " + sqlFileNumber + "  测试***************");
-		logger.info("***************SQL " + sqlFileNumber + "  测试***************");
+		logger.info("SQL 测试 [" + sqlFileNumber + "]***************");
 		// get the file name of both user file and squeal practice number
 		File userFile = FileIO.findRootResource(JunitTests.class, sqlFileNumber + ".sql");
 		SqlResults userSQL = FileIO.compactSQLFromFile(userFile);
@@ -34,8 +33,6 @@ public class JunitTests {
 		String compactSQL = userSQL.compat.toString();
 		String fullSQL = userSQL.full.toString();
 		if (compactSQL.trim().isEmpty()) {
-
-			//logger.warn("你没有输入任何的SQL, 需要输入SQL才能看到结果");
 			Msg.userMsgLn("你没有输入任何的SQL, 需要输入SQL才能看到结果");
 			return false;
 		}
