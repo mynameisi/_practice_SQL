@@ -48,28 +48,33 @@ public abstract class DB {
 					sqlBuilder = new StringBuilder();
 				}
 			}
-			//since the one line command is usually "SHUTDOWN"
-			//so it can't happen before the dropping table lines from the file
-
 			if (sql != null && !sql.isEmpty()) {
 				st.addBatch(sql);
 			}
 			logger.debug("START BATCH UPDATE");
 			st.executeBatch();
 			conn.commit();
+			//set it back to true so that MySQL+BoneCP doesn't hang at "executeBatch()"
+			//the 2nd time this method is called
+			conn.setAutoCommit(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
+
 				if (sc != null) {
 					sc.close();
 				}
+				logger.debug("Closed Scanner");
 				if (st != null) {
 					st.close();
 				}
+				logger.debug("Closed Statement");
 				if (conn != null) {
 					conn.close();
 				}
+				conn = null;
+				logger.debug("Closed Connection");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

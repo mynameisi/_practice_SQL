@@ -30,8 +30,9 @@ public class BONECP extends DB implements DBFrameWork {
 		config.setJdbcUrl(URL);
 		config.setUsername(user);
 		config.setPassword(pass);
-		config.setMinConnectionsPerPartition(5);
-		config.setMaxConnectionsPerPartition(10);
+		config.setCloseConnectionWatch(true);
+		//config.setMinConnectionsPerPartition(5);
+		//config.setMaxConnectionsPerPartition(10);
 		config.setPartitionCount(1);
 		try {
 			connectionPool = new BoneCP(config);
